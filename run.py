@@ -17,7 +17,6 @@ def typewriter(text):
             time.sleep(1)
 
 def load_game():
-    typewriter("SITUATION CODE RED. I REPEAT. CODE RED.\n")
     typewriter("Ah, there you are. Greetings admiral, we were expecting you.\n")
     typewriter("The battle room is being prepared as we speak and our fleet is ready for deployment.\n")
     typewriter("Bring us victory...\n")
@@ -29,3 +28,4 @@ def main():
     load_game()
 
 main()
+
