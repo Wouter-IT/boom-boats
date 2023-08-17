@@ -31,6 +31,9 @@ def load_game():
 
 # Reused code from the Love Sandwiches assignment    
 def validate_input_int(input):
+    """
+    Validates user input by checking if it is an Int. Also returns a specific message for an empty string.
+    """
     try:
         input_int = int(input)
         if input_int > 4 or input_int <= 0:
@@ -45,6 +48,9 @@ def validate_input_int(input):
     return True
 
 def confirm_quit(input):
+    """
+    Validates the user input and checks whether it is yes or no. Prints a message accordingly and terminates or continues the program.
+    """
     if input.lower() == "y":
         typewriter('Terminating program..\n')
         return True
@@ -58,7 +64,7 @@ def confirm_quit(input):
 
 def load_main_menu_nav():
     """
-    Clears screen and loads the main menu.
+    Clears screen and loads the main menu and awaits user input for navigation.
     """
     while True:
         os.system('clear')
