@@ -28,8 +28,21 @@ def load_game():
     typewriter("3...\n")
     typewriter("2...\n")
     typewriter("1...\n")
-    
-# def validate input():
+
+# Reused code from the Love Sandwiches assignment    
+def validate_input(input):
+    try:
+        input_int = int(input)
+        if input_int > 4 or input_int <= 0:
+            print(f"Your input has to be a number 1 to 4! Your input was: {input}, please try again.\n")
+            return False
+    except ValueError:
+        if input == "":
+            print("Your input has to be a number 1 to 4! Your input was empty, please try again.\n")
+            return False
+        print(f"Your input has to be a number 1 to 4! Your input was: {input}, please try again.\n")
+        return False
+    return True
 
 
 def load_main_menu_nav():
@@ -47,11 +60,12 @@ def load_main_menu_nav():
         4. Quit Game
         ''')
         print(DIVIDER)
+        # Reused code from the Love Sandwiches assignment
         nav_input= input("Choose a number between 1 and 4 and press 'Enter' to navigate: ")
-    # if validate_input():
-    #     print('THIS IS VALID')
-    # else:
-    #     print('THIS IS AN ERROR')
+        if validate_input(nav_input):
+            print('THIS IS VALID')
+        else:
+            print('THIS IS AN ERROR')
 
 
 def main():
