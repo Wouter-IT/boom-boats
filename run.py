@@ -1,7 +1,9 @@
 import sys,time,os
+from art import boat_logo, text_logo
 
 # Typewriter function is heavily derived from Learn Learn Scratch Tutorials YouTube Channel
 # https://www.youtube.com/watch?v=2h8e0tXHfk0&t=135s
+
 
 def typewriter(text):
     """
@@ -26,6 +28,9 @@ def main():
     Run all program functions
     """
     load_game()
+    os.system('clear')
+    print(boat_logo)
+    print(text_logo)
 
 main()
 
