@@ -30,7 +30,7 @@ def load_game():
     typewriter("1...\n")
 
 # Reused code from the Love Sandwiches assignment    
-def validate_input(input):
+def validate_input_int(input):
     try:
         input_int = int(input)
         if input_int > 4 or input_int <= 0:
@@ -44,13 +44,24 @@ def validate_input(input):
         return False
     return True
 
+def confirm_quit(input):
+    if input.lower() == "y":
+        typewriter('Terminating program..\n')
+        return True
+    elif input.lower() == "n":
+        typewriter('Returning to menu..\n')
+        return False
+    else:
+        typewriter('Invalid input, returning to menu..\n')
+        return False
+
 
 def load_main_menu_nav():
     """
     Clears screen and loads the main menu.
     """
-    os.system('clear')
     while True:
+        os.system('clear')
         print(LOGO_TEXT)
         print(MENU_BANNER)
         print(f'''
@@ -62,16 +73,20 @@ def load_main_menu_nav():
         print(DIVIDER)
         # Reused code from the Love Sandwiches assignment
         nav_input= input("Choose a number between 1 and 4 and press 'Enter' to navigate: ")
-        if validate_input(nav_input):
+        if validate_input_int(nav_input):
             nav_input_int = int(nav_input)
             if nav_input_int == 1:
                 print('Your input is ' + nav_input)
             elif nav_input_int == 2:
+                # load_rules()
                 print('Your input is ' + nav_input)
             elif nav_input_int == 3:
+                #load_leaderboards()
                 print('Your input is ' + nav_input)
             elif nav_input_int == 4:
-                return False
+                confirm = input('Are you certain you want to quit? Type y for Yes and n for No: ')
+                if confirm_quit(confirm):
+                    return False
             else:
                 print('Error, invalid input')
     
