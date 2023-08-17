@@ -63,9 +63,18 @@ def load_main_menu_nav():
         # Reused code from the Love Sandwiches assignment
         nav_input= input("Choose a number between 1 and 4 and press 'Enter' to navigate: ")
         if validate_input(nav_input):
-            print('THIS IS VALID')
-        else:
-            print('THIS IS AN ERROR')
+            nav_input_int = int(nav_input)
+            if nav_input_int == 1:
+                print('Your input is ' + nav_input)
+            elif nav_input_int == 2:
+                print('Your input is ' + nav_input)
+            elif nav_input_int == 3:
+                print('Your input is ' + nav_input)
+            elif nav_input_int == 4:
+                return False
+            else:
+                print('Error, invalid input')
+    
 
 
 def main():
