@@ -17,6 +17,9 @@ def typewriter(text):
             time.sleep(1)
 
 def load_game():
+    """
+    Displays logo and game name and simulates the game loading with immersive text greeting the player as the admiral of a naval fleet.
+    """
     print(LOGO)
     typewriter("Greetings admiral, we were expecting you.\n")
     typewriter("The battle room is operational and our fleet is ready for deployment.\n")
@@ -28,6 +31,9 @@ def load_game():
     
 
 def load_main_menu():
+    """
+    Clears screen and loads the main menu.
+    """
     os.system('clear')
     print(LOGO_TEXT)
     print(MENU_BANNER)
