@@ -29,22 +29,29 @@ def load_game():
     typewriter("2...\n")
     typewriter("1...\n")
     
+# def validate input():
 
-def load_main_menu():
+
+def load_main_menu_nav():
     """
     Clears screen and loads the main menu.
     """
     os.system('clear')
-    print(LOGO_TEXT)
-    print(MENU_BANNER)
-    print(f'''
-    1. Play Game
-    2. Rules
-    3. Leaderboards
-    4. Quit Game
-    ''')
-    print(DIVIDER)
-    print("Choose a number between 1 and 4 and press 'Enter' to navigate.\n")
+    while True:
+        print(LOGO_TEXT)
+        print(MENU_BANNER)
+        print(f'''
+        1. Play Game
+        2. Rules
+        3. Leaderboards
+        4. Quit Game
+        ''')
+        print(DIVIDER)
+        nav_input= input("Choose a number between 1 and 4 and press 'Enter' to navigate: ")
+    # if validate_input():
+    #     print('THIS IS VALID')
+    # else:
+    #     print('THIS IS AN ERROR')
 
 
 def main():
@@ -52,7 +59,7 @@ def main():
     Run all program functions
     """
     # load_game()
-    load_main_menu()
+    nav = load_main_menu_nav()
 
 
 main()
