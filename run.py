@@ -1,5 +1,5 @@
 import sys,time,os
-from art import boat_logo, text_logo, menu_banner
+from art import LOGO, LOGO_TEXT, MENU_BANNER, DIVIDER
 
 # Typewriter function is heavily derived from "Learn Learn Scratch Tutorials" YouTube Channel
 # https://www.youtube.com/watch?v=2h8e0tXHfk0&t=135s
@@ -17,15 +17,28 @@ def typewriter(text):
             time.sleep(1)
 
 def load_game():
-    typewriter("Ah, there you are. Greetings admiral, we were expecting you.\n")
+    print(LOGO)
+    typewriter("Greetings admiral, we were expecting you.\n")
     typewriter("The battle room is operational and our fleet is ready for deployment.\n")
     typewriter("Good luck admiral...\n")
+    typewriter("Game initializing in.\n")
+    typewriter("3...\n")
+    typewriter("2...\n")
+    typewriter("1...\n")
+    
 
 def load_main_menu():
     os.system('clear')
-    print(boat_logo)
-    print(text_logo)
-    print(menu_banner)
+    print(LOGO_TEXT)
+    print(MENU_BANNER)
+    print(f'''
+    1. Play Game
+    2. Rules
+    3. Leaderboards
+    4. Quit Game
+    ''')
+    print(DIVIDER)
+    print("Choose a number between 1 and 4 and press 'Enter' to navigate.\n")
 
 
 def main():
