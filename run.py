@@ -1,5 +1,5 @@
 import sys,time,os
-from art import LOGO, LOGO_TEXT, MENU_BANNER, DIVIDER
+import art
 
 # Typewriter function is heavily derived from "Learn Learn Scratch Tutorials" YouTube Channel
 # https://www.youtube.com/watch?v=2h8e0tXHfk0&t=135s
@@ -20,10 +20,9 @@ def load_game():
     """
     Displays logo and game name and simulates the game loading with immersive text greeting the player as the admiral of a naval fleet.
     """
-    print(LOGO)
+    print(art.LOGO)
     typewriter("Greetings admiral, we were expecting you.\n")
-    typewriter("The battle room is operational and our fleet is ready for deployment.\n")
-    typewriter("Good luck admiral...\n")
+    typewriter("Our fleet is ready for deployment.\n")
     typewriter("Game initializing in.\n")
     typewriter("3...\n")
     typewriter("2...\n")
@@ -68,15 +67,15 @@ def load_main_menu_nav():
     """
     while True:
         os.system('clear')
-        print(LOGO_TEXT)
-        print(MENU_BANNER)
+        print(art.LOGO_TEXT)
+        print(art.MENU_BANNER)
         print(f'''
         1. Play Game
         2. Rules
         3. Leaderboards
         4. Quit Game
         ''')
-        print(DIVIDER)
+        print(art.DIVIDER)
         # Reused code from the Love Sandwiches assignment
         nav_input= input("Choose a number between 1 and 4 and press 'Enter' to navigate: ")
         if validate_input_int(nav_input):
@@ -102,7 +101,7 @@ def main():
     """
     Run all program functions
     """
-    # load_game()
+    load_game()
     nav = load_main_menu_nav()
 
 
