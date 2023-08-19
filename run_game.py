@@ -56,6 +56,10 @@ def print_brd(brd, owner):
                 print(" " + "~" + " ", end='')
             elif cell == 2:
                 print(" " + "S" + " ", end='')
+            elif cell == 3:
+                print(" " + "H" + " ", end='') 
+            elif cell == 4:
+                print(" " + "M" + " ", end='')    
         print("|")    
     print(border_top_bottom + "\n")
     print(DIVIDER)
@@ -97,31 +101,31 @@ def user_turn():
         row_coords = row_coords.lower()
         if row_coords == 'a':
                 row_coords_int = 0
-                strike_list.append(row_coords)
+                strike_list.append(row_coords_int)
                 picked_row = True
         elif row_coords == 'b':
                 row_coords_int = 1
-                strike_list.append(row_coords)
+                strike_list.append(row_coords_int)
                 picked_row = True
         elif row_coords == 'c':
                 row_coords_int = 2
-                strike_list.append(row_coords)
+                strike_list.append(row_coords_int)
                 picked_row = True
         elif row_coords == 'd':
                 row_coords_int = 3
-                strike_list.append(row_coords)
+                strike_list.append(row_coords_int)
                 picked_row = True
         elif row_coords == 'e':
                 row_coords_int = 4
-                strike_list.append(row_coords)
+                strike_list.append(row_coords_int)
                 picked_row = True
         elif row_coords == 'f':
                 row_coords_int = 5
-                strike_list.append(row_coords)
+                strike_list.append(row_coords_int)
                 picked_row = True
         elif row_coords == 'g':
                 row_coords_int = 6
-                strike_list.append(row_coords)
+                strike_list.append(row_coords_int)
                 picked_row = True
         else:
             print("Your input was invalid, please try again.")
@@ -141,15 +145,41 @@ def user_turn():
                 continue
             print(f"Your input has to be a number between 1 to 7! Your input was: {col_coords}, please try again.\n")
             continue
+        col_coords_int -= 1
         strike_list.append(col_coords_int)
         print(strike_list)
         picked_col = True
 
     return strike_list
 
-def validate_strike(target_coords, brd):
+def validate_strike(target_coords, brd, owner):
+    """
+    Checks the input coordinates with current board state and determines if the 
+    shot was hit, miss or on a ship that has already been sunk.
+    """
     target_col = target_coords.pop()
     target_row = target_coords.pop()
+    if brd[target_row][target_col] == 0:
+        print('Miss!')
+        brd[target_row][target_col] = 4
+        return brd        
+    if brd[target_row][target_col] == 1:
+        print('Hit!')
+        brd[target_row][target_col] = 3
+        if owner != "Computer":
+            game_data['enemy_ships'] -= 1
+        else:
+            game_data['player_ships'] -= 1
+        return brd
+    if brd[target_row][target_col] == 3:
+        print('You already hit that target!')
+        return brd 
+
+def update_board(comp_brd, plyr_brd):
+    os.system('clear')
+    create_logo()
+    print_brd(comp_brd, "Computer")
+    print_brd(plyr_brd, user['username'])
 
 def main_gameloop():
     """
@@ -166,14 +196,23 @@ def main_gameloop():
     player_brd = ship_placement(player_brd, user['username'])
     print_brd(player_brd, user['username'])
 
-    #
-    target = user_turn()
-    # validate_strike(target, computer_brd)
-    # while game_data['enemy_ships'] != 0 or game_data['player_ships'] != 0:
-        # user_turn()
-        # update_board()
+    # Core game loop
+    ongoing = True
+    while ongoing:
+        target = user_turn()
+        computer_brd = validate_strike(target, computer_brd, user['username'])
+        update_board(computer_brd, player_brd)
+        if game_data['enemy_ships'] == 0:
+            ongoing == False
+            print("You are victorious!")
+            continue
         # computer_turn()
-        # update_board()
+        if game_data['player_ships'] == 0:
+            ongoing == False
+            update_board(computer_brd, player_brd)
+            print("You have been defeated!")
+            continue
+        update_board(computer_brd, player_brd)
 
     # pauses gameclient
     something = input('type something')
