@@ -56,12 +56,12 @@ def print_brd(brd, owner):
     Prints the playing board with the appropriate row and column headers
     """
     print(owner + "'s broad:")
-    numerals_top = f"     1  2  3  4  5  6  7  "
+    numerals_top = BOLD + f"     1  2  3  4  5  6  7  " + RESET
     border_top_bottom = f"   +---------------------+"
     print(numerals_top)
     print(border_top_bottom)
     row_count = 0
-    row_capitals = [' A |', ' B |', ' C |', ' D |', ' E |', ' F |', ' G |']
+    row_capitals = [BOLD + ' A |', ' B |', ' C |', ' D |', ' E |', ' F |', ' G |' + RESET]
     for row in brd:
         print(row_capitals[row_count], end="")
         row_count = row_count + 1
