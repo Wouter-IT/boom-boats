@@ -45,6 +45,9 @@ game_data = {
 # end= to prevent new line after print was found on EnterpriseDNA blog
 # https://blog.enterprisedna.co/python-print-without-newline-easy-step-by-step-guide/#:~:text=To%20print%20without%20a%20new,")
 def create_logo():
+    """
+    Prints logo and banner on screen.
+    """
     print(LOGO_TEXT)
     print(BANNER)
 
@@ -164,6 +167,10 @@ def user_turn():
     return strike_list
 
 def computer_turn(plyr_brd):
+    """
+    Processes the computers turn, randomly chooses target, validates if it is a valid target, 
+    and then proceeds to register the strike on the player_brd.
+    """
     # Select tile to strike and validate target.
     strike_valid = False
     valid_comp_strike = False
@@ -211,6 +218,9 @@ def validate_strike(target_coords, brd, owner):
         return brd 
 
 def update_board(comp_brd, plyr_brd):
+    """
+    Updates the gameboard with all current strikes processed.
+    """
     os.system('clear')
     create_logo()
     print_brd(comp_brd, "Computer")
