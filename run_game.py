@@ -2,8 +2,19 @@ import sys
 import os
 import random
 import copy
+from colorama import Fore, Style
 from art import LOGO_TEXT, DIVIDER, BANNER, UNAME_BANNER
 from settings import user
+
+# Use of color came from Code Institute student kpetrauskas92 and his project Fury
+# https://github.com/kpetrauskas92/fury-p3/blob/main/game/game.py
+GREEN = Fore.GREEN
+CYAN = Fore.CYAN
+YELLOW = Fore.YELLOW
+RED = Fore.RED
+BOLD = Style.BRIGHT
+DIM = Style.DIM
+RESET = Style.RESET_ALL
 
 """
 Creates a list of lists with intigers assigned to it that function as tiles for the game and and display the game data.
@@ -53,13 +64,13 @@ def print_brd(brd, owner):
         row_count = row_count + 1
         for cell in row:
             if cell == 0 or cell == 1:
-                print(" " + "~" + " ", end='')
+                print(DIM + " " + "~" + " " + RESET, end='')
             elif cell == 2:
-                print(" " + "S" + " ", end='')
+                print(GREEN + " " + "S" + " " + RESET, end='')
             elif cell == 3:
-                print(" " + "H" + " ", end='') 
+                print(RED + " " + "H" + " " + RESET, end='') 
             elif cell == 4:
-                print(" " + "M" + " ", end='')    
+                print(CYAN + " " + "M" + " " + RESET, end='')    
         print("|")    
     print(border_top_bottom + "\n")
     print(DIVIDER)
@@ -152,6 +163,30 @@ def user_turn():
 
     return strike_list
 
+def computer_turn(plyr_brd):
+    # Select tile to strike and validate target.
+    strike_valid = False
+    valid_comp_strike = False
+    while valid_comp_strike == False:
+        rdm_strike_row = random.randint(0,6)
+        print(rdm_strike_row)
+        rdm_strike_col = random.randint(0,6)
+        print(rdm_strike_col)
+        print(plyr_brd[rdm_strike_row][rdm_strike_col])
+        if plyr_brd[rdm_strike_row][rdm_strike_col] != 3 and plyr_brd[rdm_strike_row][rdm_strike_col] != 4:
+            valid_comp_strike == True
+            strike_valid = True
+            break
+    # Process valid strike
+    if strike_valid == True:
+        if plyr_brd[rdm_strike_row][rdm_strike_col] == 0:
+            plyr_brd[rdm_strike_row][rdm_strike_col] = 4
+        elif plyr_brd[rdm_strike_row][rdm_strike_col] == 2:
+            plyr_brd[rdm_strike_row][rdm_strike_col] = 3
+            game_data['player_ships'] -= 1
+    
+    return plyr_brd
+
 def validate_strike(target_coords, brd, owner):
     """
     Checks the input coordinates with current board state and determines if the 
@@ -199,18 +234,21 @@ def main_gameloop():
     # Core game loop
     ongoing = True
     while ongoing:
+        game_data['turn_count'] += 1
         target = user_turn()
         computer_brd = validate_strike(target, computer_brd, user['username'])
         update_board(computer_brd, player_brd)
         if game_data['enemy_ships'] == 0:
             ongoing == False
             print("You are victorious!")
+            enter = input('Press Enter to continue')
             continue
-        # computer_turn()
+        player_brd = computer_turn(player_brd)
         if game_data['player_ships'] == 0:
             ongoing == False
             update_board(computer_brd, player_brd)
             print("You have been defeated!")
+            enter = input('Press Enter to continue')
             continue
         update_board(computer_brd, player_brd)
 
