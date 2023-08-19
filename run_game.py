@@ -1,5 +1,6 @@
 import sys
 import os
+import random
 from art import LOGO_TEXT, DIVIDER, BANNER, UNAME_BANNER
 from settings import user
 
@@ -8,9 +9,10 @@ Creates a list of lists with intigers assigned to it that function as tiles for 
 Function call upon these list indexes to process computer and player input needed to operate the main game loop
 Numbers stand for the following:
 0 = empty tile
-1 = ship
-2 = hit ship
-3 = missed shot
+1 = computer hidden ship
+2 = player ship
+3 = hit ship
+4 = missed shot
 """ 
 brd = [
         [0, 0, 0, 0, 0, 0, 0,],
@@ -43,19 +45,51 @@ def print_brd(brd, owner):
         print(row_capitals[row_count], end="")
         row_count = row_count + 1
         for cell in row:
-            if cell == 0:
+            if cell == 0 or cell == 1:
                 print(" " + "~" + " ", end='')
+            elif cell == 2:
+                print(" " + "S" + " ", end='')
         print("|")    
     print(border_top_bottom + "\n")
     print(DIVIDER)
 
+def ship_placement(owner_brd, owner):
+    """
+    Places ships on computer and player board an verifies if there isn't already a ship on the given tile.
+    """
+    ship_counter = 0
+    if owner != "Computer":
+        while ship_counter < 5:
+            # Random nr generation found on W3Schools
+            #https://www.w3schools.com/python/ref_random_randint.asp
+            rdm_row = random.randint(0,6)
+            rdm_col = random.randint(0,6)
+            if owner_brd[rdm_row][rdm_col] == 0:
+                owner_brd[rdm_row][rdm_col] = 2
+                ship_counter = ship_counter + 1
+    else:
+        while ship_counter < 5:
+            rdm_row = random.randint(0,6)
+            rdm_col = random.randint(0,6)
+            if owner_brd[rdm_row][rdm_col] == 0:
+                    owner_brd[rdm_row][rdm_col] = 1
+                    ship_counter = ship_counter + 1
+    return owner_brd        
+
 def main_gameloop():
+    """
+    Executes the main game loop
+    """
     create_logo()
     computer_brd = brd
     player_brd = brd
+
+    computer_brd = ship_placement(computer_brd, "Computer")
+    player_brd = ship_placement(player_brd, user['username'])
     print_brd(computer_brd, "Computer")
     print_brd(player_brd, user['username'])
-    # pauses client
+    # pauses gameclient
+
     something = input('type something')
 
 def uname_registration():
