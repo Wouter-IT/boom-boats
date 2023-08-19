@@ -15,30 +15,37 @@ def create_brd():
     print(BANNER)
     numerals_top = f"\n     1  2  3  4  5  6  7  "
     border_top_bottom = f"   +---------------------+"
+    
+    """
+    Creates a list of lists with intigers assigned to it that function as tiles for the game and and display the game data.
+    Function call upon these list indexes to process computer and player input needed to operate the main game loop
+    Numbers stand for the following:
+    0 = empty tile
+    1 = ship
+    2 = hit ship
+    3 = missed shot
+    """ 
     brd = [
-        [8, 0, 0, 0, 0, 0, 0, 0, 9],
-        [8, 0, 0, 0, 0, 0, 0, 0, 9],
-        [8, 0, 0, 0, 0, 0, 0, 0, 9],
-        [8, 0, 0, 0, 0, 0, 0, 0, 9],
-        [8, 0, 0, 0, 0, 0, 0, 0, 9],
-        [8, 0, 0, 0, 0, 0, 0, 0, 9],
-        [8, 0, 0, 0, 0, 0, 0, 0, 9]
+        [0, 0, 0, 0, 0, 0, 0,],
+        [0, 0, 0, 0, 0, 0, 0,],
+        [0, 0, 0, 0, 0, 0, 0,],
+        [0, 0, 0, 0, 0, 0, 0,],
+        [0, 0, 0, 0, 0, 0, 0,],
+        [0, 0, 0, 0, 0, 0, 0,],
+        [0, 0, 0, 0, 0, 0, 0,]
     ]
     print(numerals_top)
     print(border_top_bottom)
     
     row_count = 0
-    row_capitals = [' A ', ' B ', ' C ', ' D ', ' E ', ' F ', ' G ']
+    row_capitals = [' A |', ' B |', ' C |', ' D |', ' E |', ' F |', ' G |']
     for row in brd:
         print(row_capitals[row_count], end="")
         row_count = row_count + 1
         for cell in row:
             if cell == 0:
                 print(" " + "~" + " ", end='')
-            elif cell == 8:
-                print("|", end="")    
-            elif cell == 9:
-                print("|")
+        print("|")    
     print(border_top_bottom)
     something = input('type something')
 
