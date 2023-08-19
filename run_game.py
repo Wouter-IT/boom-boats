@@ -25,6 +25,12 @@ brd = [
         [0, 0, 0, 0, 0, 0, 0,]
 ]
 
+game_data = {
+    "enemy_ships":  5,
+    "player_ships": 5,
+    "turn_count": 0
+}
+
 # end= to prevent new line after print was found on EnterpriseDNA blog
 # https://blog.enterprisedna.co/python-print-without-newline-easy-step-by-step-guide/#:~:text=To%20print%20without%20a%20new,")
 def create_logo():
@@ -77,6 +83,74 @@ def ship_placement(owner_brd, owner):
                     ship_counter += 1
     return owner_brd        
 
+
+def user_turn():
+    """
+    Process user input for strike coordinates and checks if the inputs are valid, throwing an error in case they are invalid.
+    Then proceeds to pack the coordinates in a list for the strike validation.
+    """
+    strike_list = []
+    print(f"Enemy ships intact: {game_data['enemy_ships']}    Your ships intact: {game_data['player_ships']}    Turn: {game_data['turn_count']}\n")
+    picked_row = False
+    while picked_row == False:
+        row_coords = input("Choose a row for your next stike (A, B, C, D, E, F, G): ")
+        row_coords = row_coords.lower()
+        if row_coords == 'a':
+                row_coords_int = 0
+                strike_list.append(row_coords)
+                picked_row = True
+        elif row_coords == 'b':
+                row_coords_int = 1
+                strike_list.append(row_coords)
+                picked_row = True
+        elif row_coords == 'c':
+                row_coords_int = 2
+                strike_list.append(row_coords)
+                picked_row = True
+        elif row_coords == 'd':
+                row_coords_int = 3
+                strike_list.append(row_coords)
+                picked_row = True
+        elif row_coords == 'e':
+                row_coords_int = 4
+                strike_list.append(row_coords)
+                picked_row = True
+        elif row_coords == 'f':
+                row_coords_int = 5
+                strike_list.append(row_coords)
+                picked_row = True
+        elif row_coords == 'g':
+                row_coords_int = 6
+                strike_list.append(row_coords)
+                picked_row = True
+        else:
+            print("Your input was invalid, please try again.")
+            continue
+    
+    picked_col = False
+    while picked_col == False:
+        col_coords = input("Now choose a column for your next stike (1, 2, 3, 4, 5, 6, 7): ")
+        try:
+            col_coords_int = int(col_coords)
+            if col_coords_int < 1 or col_coords_int > 7:
+                print(f"Your input has to be a number between 1 to 7! Your input was: {col_coords_int}, please try again.\n")
+                continue
+        except ValueError:
+            if col_coords == "":
+                print(f"Your input has to be a number between 1 to 7! Your input was empty, please try again.\n")
+                continue
+            print(f"Your input has to be a number between 1 to 7! Your input was: {col_coords}, please try again.\n")
+            continue
+        strike_list.append(col_coords_int)
+        print(strike_list)
+        picked_col = True
+
+    return strike_list
+
+def validate_strike(target_coords, brd):
+    target_col = target_coords.pop()
+    target_row = target_coords.pop()
+
 def main_gameloop():
     """
     Executes the main game loop
@@ -91,10 +165,15 @@ def main_gameloop():
     print_brd(computer_brd, "Computer")
     player_brd = ship_placement(player_brd, user['username'])
     print_brd(player_brd, user['username'])
-    print(f'{computer_brd}')
-    print(f'{player_brd}')
 
     #
+    target = user_turn()
+    # validate_strike(target, computer_brd)
+    # while game_data['enemy_ships'] != 0 or game_data['player_ships'] != 0:
+        # user_turn()
+        # update_board()
+        # computer_turn()
+        # update_board()
 
     # pauses gameclient
     something = input('type something')
