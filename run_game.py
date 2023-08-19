@@ -1,6 +1,7 @@
 import sys
 import os
 import random
+import copy
 from art import LOGO_TEXT, DIVIDER, BANNER, UNAME_BANNER
 from settings import user
 
@@ -66,30 +67,36 @@ def ship_placement(owner_brd, owner):
             rdm_col = random.randint(0,6)
             if owner_brd[rdm_row][rdm_col] == 0:
                 owner_brd[rdm_row][rdm_col] = 2
-                ship_counter = ship_counter + 1
+                ship_counter += 1
     else:
         while ship_counter < 5:
             rdm_row = random.randint(0,6)
             rdm_col = random.randint(0,6)
             if owner_brd[rdm_row][rdm_col] == 0:
                     owner_brd[rdm_row][rdm_col] = 1
-                    ship_counter = ship_counter + 1
+                    ship_counter += 1
     return owner_brd        
 
 def main_gameloop():
     """
     Executes the main game loop
     """
+    #Creates visuals and distributes ships on player and computer board
     create_logo()
-    computer_brd = brd
-    player_brd = brd
-
+    # copy.deepcopy bug fix for copying the reference to the entitiy 'brd' as opposed to the actual list of lists. Found on stack Overflow by user Felix King
+    # https://stackoverflow.com/questions/2612802/how-do-i-clone-a-list-so-that-it-doesnt-change-unexpectedly-after-assignment
+    computer_brd = copy.deepcopy(brd)
+    player_brd = copy.deepcopy(brd)
     computer_brd = ship_placement(computer_brd, "Computer")
-    player_brd = ship_placement(player_brd, user['username'])
     print_brd(computer_brd, "Computer")
+    player_brd = ship_placement(player_brd, user['username'])
     print_brd(player_brd, user['username'])
-    # pauses gameclient
+    print(f'{computer_brd}')
+    print(f'{player_brd}')
 
+    #
+
+    # pauses gameclient
     something = input('type something')
 
 def uname_registration():
