@@ -6,6 +6,7 @@ from colorama import Fore, Style
 from art import LOGO_TEXT, DIVIDER, BANNER, UNAME_BANNER
 from settings import user
 
+
 # Use of color came from Code Institute student kpetrauskas92 and his project Fury
 # https://github.com/kpetrauskas92/fury-p3/blob/main/game/game.py
 GREEN = Fore.GREEN
@@ -111,7 +112,7 @@ def user_turn():
     print(f"Enemy ships intact: {game_data['enemy_ships']}    Your ships intact: {game_data['player_ships']}    Turn: {game_data['turn_count']}\n")
     picked_row = False
     while picked_row == False:
-        row_coords = input("Choose a row for your next stike (A, B, C, D, E, F, G): ")
+        row_coords = input("Choose a row for your next stike (A, B, C, D, E, F, G): \n")
         row_coords = row_coords.lower()
         if row_coords == 'a':
                 row_coords_int = 0
@@ -147,7 +148,7 @@ def user_turn():
     
     picked_col = False
     while picked_col == False:
-        col_coords = input("Now choose a column for your next stike (1, 2, 3, 4, 5, 6, 7): ")
+        col_coords = input("Now choose a column for your next stike (1, 2, 3, 4, 5, 6, 7): \n")
         try:
             col_coords_int = int(col_coords)
             if col_coords_int < 1 or col_coords_int > 7:
@@ -202,11 +203,11 @@ def validate_strike(target_coords, brd, owner):
     target_col = target_coords.pop()
     target_row = target_coords.pop()
     if brd[target_row][target_col] == 0:
-        print('Miss!')
+        typewriter('Miss!')
         brd[target_row][target_col] = 4
         return brd        
     if brd[target_row][target_col] == 1:
-        print('Hit!')
+        typewriter('Hit!!')
         brd[target_row][target_col] = 3
         if owner != "Computer":
             game_data['enemy_ships'] -= 1
@@ -251,19 +252,19 @@ def main_gameloop():
         if game_data['enemy_ships'] == 0:
             ongoing == False
             print("You are victorious!")
-            enter = input('Press Enter to continue')
+            enter = input('Press Enter to continue\n')
             continue
         player_brd = computer_turn(player_brd)
         if game_data['player_ships'] == 0:
             ongoing == False
             update_board(computer_brd, player_brd)
             print("You have been defeated!")
-            enter = input('Press Enter to continue')
+            enter = input('Press Enter to continue\n')
             continue
         update_board(computer_brd, player_brd)
 
     # pauses gameclient
-    something = input('type something')
+    something = input('type something\n')
 
 def uname_registration():
     """

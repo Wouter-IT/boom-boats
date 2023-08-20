@@ -92,7 +92,7 @@ def load_main_menu_nav():
                 #load_leaderboards()
                 print('Your input is ' + nav_input)
             elif nav_input_int == 4:
-                confirm = input('Are you certain you want to quit? Type y for Yes and n for No: ')
+                confirm = input('Are you certain you want to quit? Type y for Yes and n for No: \n')
                 if confirm_quit(confirm):
                     return False
             else:
@@ -106,7 +106,6 @@ def main():
     """
     # load_game()
     nav = load_main_menu_nav()
-
 
 main()
 
