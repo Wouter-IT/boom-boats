@@ -62,7 +62,8 @@ def print_brd(brd, owner):
     print(numerals_top)
     print(border_top_bottom)
     row_count = 0
-    row_capitals = [BOLD + ' A |', ' B |', ' C |', ' D |', ' E |', ' F |', ' G |' + RESET]
+    row_capitals = [BOLD + ' A |' + RESET, BOLD + ' B |' + RESET, BOLD + ' C |' + RESET, BOLD + ' D |' + RESET,
+    BOLD + ' E |' + RESET, BOLD + ' F |' + RESET, BOLD + ' G |' + RESET]
     for row in brd:
         print(row_capitals[row_count], end="")
         row_count = row_count + 1
