@@ -162,7 +162,6 @@ def user_turn():
             continue
         col_coords_int -= 1
         strike_list.append(col_coords_int)
-        print(strike_list)
         picked_col = True
 
     return strike_list
@@ -203,11 +202,11 @@ def validate_strike(target_coords, brd, owner):
     target_col = target_coords.pop()
     target_row = target_coords.pop()
     if brd[target_row][target_col] == 0:
-        typewriter('Miss!')
+        print('Miss!')
         brd[target_row][target_col] = 4
         return brd        
     if brd[target_row][target_col] == 1:
-        typewriter('Hit!!')
+        print('Hit!!')
         brd[target_row][target_col] = 3
         if owner != "Computer":
             game_data['enemy_ships'] -= 1
