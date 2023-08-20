@@ -104,7 +104,7 @@ def main():
     """
     Run all program functions
     """
-    # load_game()
+    load_game()
     nav = load_main_menu_nav()
 
 main()
