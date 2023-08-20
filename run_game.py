@@ -216,6 +216,9 @@ def validate_strike(target_coords, brd, owner):
     if brd[target_row][target_col] == 3:
         print('You already hit that target!')
         return brd 
+    if brd[target_row][target_col] == 4:
+        print('You already struck this target! Nothing but water here.')
+        return brd 
 
 def update_board(comp_brd, plyr_brd):
     """
