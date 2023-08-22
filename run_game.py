@@ -2,6 +2,7 @@ import sys
 import os
 import random
 import copy
+import time
 from colorama import Fore, Style
 from art import LOGO_TEXT, DIVIDER, BANNER, UNAME_BANNER
 from settings import user
@@ -17,6 +18,10 @@ BOLD = Style.BRIGHT
 DIM = Style.DIM
 RESET = Style.RESET_ALL
 
+#LINE_CLEAR and the use of ANSI code comes from itnext.io and is used to remove error messages after a few seconds.
+# https://itnext.io/overwrite-previously-printed-lines-4218a9563527
+LINE_CLEAR = '\x1b[2K'
+
 """
 Creates a list of lists with intigers assigned to it that function as tiles for the game and and display the game data.
 Function call upon these list indexes to process computer and player input needed to operate the main game loop
@@ -27,7 +32,7 @@ Numbers stand for the following:
 3 = hit ship
 4 = missed shot
 """ 
-brd = [
+BRD = [
         [0, 0, 0, 0, 0, 0, 0,],
         [0, 0, 0, 0, 0, 0, 0,],
         [0, 0, 0, 0, 0, 0, 0,],
@@ -37,6 +42,9 @@ brd = [
         [0, 0, 0, 0, 0, 0, 0,]
 ]
 
+"""
+Stores game data to display on screen the enemy/player ships that are left as well as the turn count.
+""" 
 game_data = {
     "enemy_ships":  5,
     "player_ships": 5,
@@ -145,6 +153,7 @@ def user_turn():
                 picked_row = True
         else:
             print("Your input was invalid, please try again.")
+            time.sleep(2)
             continue
     
     picked_col = False
@@ -153,13 +162,19 @@ def user_turn():
         try:
             col_coords_int = int(col_coords)
             if col_coords_int < 1 or col_coords_int > 7:
-                print(f"Your input has to be a number between 1 to 7! Your input was: {col_coords_int}, please try again.\n")
+                print(RED + BOLD + f"Your input has to be a number between 1 to 7! Your input was: {col_coords_int}, please try again." + RESET, end='\r')
+                time.sleep(2)
+                print(end=LINE_CLEAR)
                 continue
         except ValueError:
             if col_coords == "":
-                print(f"Your input has to be a number between 1 to 7! Your input was empty, please try again.\n")
+                print(RED + BOLD + f"Your input has to be a number between 1 to 7! Your input was empty, please try again." + RESET, end='\r')
+                time.sleep(2)
+                print(end=LINE_CLEAR)
                 continue
-            print(f"Your input has to be a number between 1 to 7! Your input was: {col_coords}, please try again.\n")
+            print(RED + BOLD + f"Your input has to be a number between 1 to 7! Your input was: {col_coords}, please try again." + RESET, end='\r')
+            time.sleep(2)
+            print(end=LINE_CLEAR)
             continue
         col_coords_int -= 1
         strike_list.append(col_coords_int)
@@ -238,8 +253,8 @@ def main_gameloop():
     create_logo()
     # copy.deepcopy bug fix for copying the reference to the entitiy 'brd' as opposed to the actual list of lists. Found on stack Overflow by user Felix King
     # https://stackoverflow.com/questions/2612802/how-do-i-clone-a-list-so-that-it-doesnt-change-unexpectedly-after-assignment
-    computer_brd = copy.deepcopy(brd)
-    player_brd = copy.deepcopy(brd)
+    computer_brd = copy.deepcopy(BRD)
+    player_brd = copy.deepcopy(BRD)
     computer_brd = ship_placement(computer_brd, "Computer")
     print_brd(computer_brd, "Computer")
     player_brd = ship_placement(player_brd, user['username'])

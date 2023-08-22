@@ -34,6 +34,7 @@ def load_game():
     """
     Displays logo and game name and simulates the game loading with immersive text greeting the player as the admiral of a naval fleet.
     """
+    os.system('clear')
     print(LOGO)
     typewriter("Greetings admiral, we were expecting you.\n")
     typewriter("Our fleet is ready for deployment.\n")
