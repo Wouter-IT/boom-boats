@@ -71,6 +71,8 @@ def clear_screen():
     print(LINE_CLEAR)
     print(LINE_UP)
     print(LINE_CLEAR)
+    os.system('cls')
+    os.system('clear')
 
 def create_logo():
     """
