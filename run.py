@@ -110,10 +110,20 @@ def load_game():
     typewriter("2...\n")
     typewriter("1...\n")
 
+
+# Gspread official documentation used to select worksheet, create a list of dictionaries.
+# https://docs.gspread.org/en/latest/user-guide.html#selecting-a-worksheet
 def load_leaderboard():
     clear_screen()
     print(LOGO_TEXT)
     print(LDB_BANNER)
+
+    ldb_sheet = SHEET.worksheet('leaderboard')
+    unsorted_scores = ldb_sheet.get_all_records()
+    sorted_scores = sorted(unsorted_scores, key=lambda U_S: U_S['Score'], reverse=True)
+    print(f'{sorted_scores}')
+    wait = input("Waiting")
+    
 
 # Reused code from the Love Sandwiches assignment    
 def validate_input_int(user_input):
@@ -179,8 +189,7 @@ def load_main_menu_nav():
             elif nav_input_int == 2:
                 load_rules("menu")
             elif nav_input_int == 3:
-                #load_leaderboard()
-                print('Your input is ' + nav_input)
+                load_leaderboard()
             elif nav_input_int == 4:
                 confirm = input('Are you certain you want to quit? Yes or no (y/n): \n')
                 if confirm_quit(confirm):
@@ -194,7 +203,7 @@ def main():
     """
     Run all program functions
     """
-    load_game()
+    #load_game()
     nav = load_main_menu_nav()
 
 main()
