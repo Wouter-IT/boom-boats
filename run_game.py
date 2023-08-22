@@ -21,6 +21,7 @@ RESET = Style.RESET_ALL
 #LINE_CLEAR and the use of ANSI code comes from itnext.io and is used to remove error messages after a few seconds.
 # https://itnext.io/overwrite-previously-printed-lines-4218a9563527
 LINE_CLEAR = '\x1b[2K'
+LINE_UP = '\033[1A'
 
 """
 Creates a list of lists with intigers assigned to it that function as tiles for the game and and display the game data.
@@ -56,6 +57,20 @@ game_data = {
 def clear_screen():
     os.system('cls')
     os.system('clear')
+    print(LINE_CLEAR)
+    print(LINE_UP)
+    print(LINE_CLEAR)
+    print(LINE_UP)
+    print(LINE_CLEAR)
+    print(LINE_UP)
+    print(LINE_CLEAR)
+    print(LINE_CLEAR)
+    print(LINE_UP)
+    print(LINE_CLEAR)
+    print(LINE_UP)
+    print(LINE_CLEAR)
+    print(LINE_UP)
+    print(LINE_CLEAR)
 
 def create_logo():
     """
