@@ -53,6 +53,10 @@ game_data = {
 
 # end= to prevent new line after print was found on EnterpriseDNA blog
 # https://blog.enterprisedna.co/python-print-without-newline-easy-step-by-step-guide/#:~:text=To%20print%20without%20a%20new,")
+def clear_screen():
+    os.system('cls')
+    os.system('clear')
+
 def create_logo():
     """
     Prints logo and banner on screen.
@@ -298,7 +302,7 @@ def update_board(comp_brd, plyr_brd):
     """
     Updates the gameboard with all current strikes processed.
     """
-    os.system('clear')
+    clear_screen()
     create_logo()
     print_brd(comp_brd, "Computer")
     print_brd(plyr_brd, user['username'])
@@ -369,7 +373,7 @@ def main_gameloop():
     new_game = input('Do you wish to play again? (y/n)\n')
     new_game_choice = validate_answer(new_game)
     if new_game_choice:
-        os.system('clear')
+        clear_screen()
         reset_game()
         main_gameloop()
     else:
@@ -383,13 +387,13 @@ def uname_registration():
     """
     valid_input = False
     while valid_input == False:
-        os.system('clear')
+        clear_screen()
         print(LOGO_TEXT)
         print(UNAME_BANNER)
         username_input = input("\nAdmiral, please choose a username. It has to be at least 1 character long:\n")
         only_space = username_input.isspace()
         if only_space:
-            os.system('clear')
+            clear_screen()
             print(LOGO_TEXT)
             print(UNAME_BANNER)
             print(RED + BOLD + "\nThe username cannot be just whitespace." + RESET, end='\r')
@@ -398,10 +402,10 @@ def uname_registration():
         elif username_input != "":
             valid_input = True
             user['username'] = username_input
-            os.system('clear')
+            clear_screen()
             main_gameloop()
         else:
-            os.system('clear')
+            clear_screen()
             print(LOGO_TEXT)
             print(UNAME_BANNER)
             print(RED + BOLD + "\nThe username cannot be empty." + RESET, end='\r')
