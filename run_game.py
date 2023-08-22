@@ -303,6 +303,34 @@ def update_board(comp_brd, plyr_brd):
     print_brd(comp_brd, "Computer")
     print_brd(plyr_brd, user['username'])
 
+def validate_answer(user_input):
+    """
+    Validates the user input and checks whether it is yes or no. Prints a message accordingly and terminates or continues the program.
+    """
+    is_valid = False
+    while is_valid == False:
+        if user_input.lower() == "y":
+            is_valid = True
+            return True
+        elif user_input.lower() == "n":
+            is_valid = True
+            return False
+        else:
+            print(RED + BOLD + f"{user_input} is not a valid answer." + RESET, end='\r')
+            time.sleep(1.2)
+            print(LINE_CLEAR)
+            user_input = input('Do you wish to play again? (y/n)\n')
+
+def reset_game():
+    ''''
+    Resets the game_data and user data (except the username) for another game.
+    '''
+    game_data['enemy_ships'] = 5
+    game_data['player_ships'] = 5
+    game_data['turn_count'] = 0
+    user['score'] = 0
+    user['turns'] = 0
+
 def main_gameloop():
     """
     Executes the main game loop
@@ -327,21 +355,27 @@ def main_gameloop():
         computer_brd = validate_strike(target, computer_brd, user['username'])
         update_board(computer_brd, player_brd)
         if game_data['enemy_ships'] == 0:
-            ongoing == False
-            print("You are victorious!")
-            enter = input('Press Enter to continue\n')
+            ongoing = False
+            print(GREEN + BOLD + ">>> You are victorious! <<<" + RESET)
             continue
         player_brd = computer_turn(player_brd)
         if game_data['player_ships'] == 0:
-            ongoing == False
+            ongoing = False
             update_board(computer_brd, player_brd)
-            print("You have been defeated!")
-            enter = input('Press Enter to continue\n')
+            print(RED + BOLD + ">>> You have been defeated! <<<" + RESET)
             continue
         update_board(computer_brd, player_brd)
 
-    # pauses gameclient
-    something = input('type something\n')
+    new_game = input('Do you wish to play again? (y/n)\n')
+    new_game_choice = validate_answer(new_game)
+    if new_game_choice:
+        os.system('clear')
+        reset_game()
+        main_gameloop()
+    else:
+        reset_game()
+        print('Returning to menu...')
+        time.sleep(1.2)
 
 def uname_registration():
     """

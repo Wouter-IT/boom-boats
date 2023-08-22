@@ -64,15 +64,15 @@ def validate_input_int(input):
         return False
     return True
 
-def confirm_quit(input):
+def confirm_quit(user_input):
     """
     Validates the user input and checks whether it is yes or no. Prints a message accordingly and terminates or continues the program.
     """
-    if input.lower() == "y":
+    if user_input.lower() == "y":
         typewriter('Click the "Restart Game" button to reboot the game.\n')
         typewriter('Terminating program..\n')
         return True
-    elif input.lower() == "n":
+    elif user_input.lower() == "n":
         typewriter('Returning to menu..\n')
         return False
     else:
