@@ -185,8 +185,9 @@ def user_turn():
 
 def computer_turn(plyr_brd):
     """
-    Processes the computers turn, randomly chooses target, validates if it is a valid target, 
-    and then proceeds to register the strike on the player_brd.
+    Processes the computers turn, randomly chooses target, validates if it is a 
+    valid target, and then proceeds to print the selection and a miss/hit 
+    confirm to the screen before it registers the strike on the player_brd.
     """
     # Select tile to strike and validate target.
     strike_valid = False
@@ -223,7 +224,7 @@ def computer_turn(plyr_brd):
             print("Computer picked row 'G'.")
             time.sleep(0.8)
         
-        # Print slected column
+        # Print selected column
         if rdm_strike_col == 0:
             print("Computer picked row '1'")
             time.sleep(0.8)
@@ -246,6 +247,7 @@ def computer_turn(plyr_brd):
             print("Computer picked row '7'.")
             time.sleep(0.8)
         
+        # Processes hit/miss and prints it to the terminal
         if plyr_brd[rdm_strike_row][rdm_strike_col] == 0:
             print(GREEN + "The Computer Missed!" + RESET)
             time.sleep(1)
@@ -351,7 +353,15 @@ def uname_registration():
         print(LOGO_TEXT)
         print(UNAME_BANNER)
         username_input = input("\nAdmiral, please choose a username. It has to be at least 1 character long:\n")
-        if username_input != "":
+        only_space = username_input.isspace()
+        if only_space:
+            os.system('clear')
+            print(LOGO_TEXT)
+            print(UNAME_BANNER)
+            print(RED + BOLD + "\nThe username cannot be just whitespace." + RESET, end='\r')
+            time.sleep(1.8)
+            print(LINE_CLEAR)
+        elif username_input != "":
             valid_input = True
             user['username'] = username_input
             os.system('clear')
@@ -361,6 +371,6 @@ def uname_registration():
             print(LOGO_TEXT)
             print(UNAME_BANNER)
             print(RED + BOLD + "\nThe username cannot be empty." + RESET, end='\r')
-            time.sleep(2)
+            time.sleep(1.8)
             print(LINE_CLEAR)
 
