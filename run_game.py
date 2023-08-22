@@ -123,7 +123,8 @@ def user_turn():
     Then proceeds to pack the coordinates in a list for the strike validation.
     """
     strike_list = []
-    print(RED + f"Enemy ships intact: {game_data['enemy_ships']}" + RESET + GREEN + f"    Your ships intact: {game_data['player_ships']}" + RESET + f"    Turn: {game_data['turn_count']}\n")
+    print(RED + f"Enemy ships intact: {game_data['enemy_ships']}" + RESET + GREEN + f"    Your ships intact: {game_data['player_ships']}" + RESET + 
+    f"    Score: {user['score']}" + f"    Turn: {game_data['turn_count']}\n")
     picked_row = False
     while picked_row == False:
         row_coords = input("Choose a row for your next strike (A, B, C, D, E, F, G): \n")
@@ -328,6 +329,32 @@ def validate_answer(user_input):
             print(LINE_CLEAR)
             user_input = input('Do you wish to play again? (y/n)\n')
 
+def bonus_score(win):
+    '''
+    Check if the player won and provides bonus points accordingly. Player earns points for winning and effective shooting.
+    '''
+    if win:
+        user['score'] += 10
+        print(GREEN + BOLD + "You score 10 bonus points for winning!" + RESET)
+    else:
+        user['score'] -= 10
+        print(RED + BOLD + "You lose 10 points for defeat!" + RESET)
+    
+    if win:
+        if game_data['turn_count'] <= 5:
+            user['score'] += 50
+            print(GREEN + BOLD + "You score 50 bonus points for 100 percent accuracy" + RESET)
+        elif game_data['turn_count'] > 5 and game_data['turn_count'] <= 10:
+            user['score'] += 30
+            print(GREEN + BOLD + "You score 30 bonus points for hitting almost all shots" + RESET)
+        elif game_data['turn_count'] > 10 and game_data['turn_count'] <= 20:
+            user['score'] += 20
+            print(GREEN + BOLD + "You score 20 bonus points for hitting many shots " + RESET)
+        elif game_data['turn_count'] > 20 and game_data['turn_count'] <= 30:
+            user['score'] += 10
+            print(GREEN + BOLD + "You score 10 bonus points for an average performance" + RESET)
+
+
 def reset_game():
     ''''
     Resets the game_data and user data (except the username) for another game.
@@ -365,12 +392,16 @@ def main_gameloop():
         if game_data['enemy_ships'] == 0:
             ongoing = False
             print(GREEN + BOLD + ">>> You are victorious! <<<" + RESET)
+            bonus_score(True)
+            print(BOLD + f"\nYou completed your run with a total of {user['score']} points. Your achievements are saved to the leaderboard." + RESET)
             continue
         player_brd = computer_turn(player_brd)
         if game_data['player_ships'] == 0:
             ongoing = False
             update_board(computer_brd, player_brd)
             print(RED + BOLD + ">>> You have been defeated! <<<" + RESET)
+            bonus_score(False)
+            print(BOLD + f"\nYou completed your run with a total of {user['score']} points. Your achievements are saved to the leaderboard." + RESET)
             continue
         update_board(computer_brd, player_brd)
 
