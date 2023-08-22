@@ -219,11 +219,17 @@ def validate_strike(target_coords, brd, owner):
     target_col = target_coords.pop()
     target_row = target_coords.pop()
     if brd[target_row][target_col] == 0:
-        print('Miss!')
+        print('You shoot..')
+        time.sleep(1)
+        print(CYAN + 'Miss!' + RESET)
+        time.sleep(1)
         brd[target_row][target_col] = 4
         return brd        
     if brd[target_row][target_col] == 1:
-        print('Hit!!')
+        print('You shoot..')
+        time.sleep(1)
+        print(RED + 'Hit!!' + RESET)
+        time.sleep(1)
         brd[target_row][target_col] = 3
         if owner != "Computer":
             game_data['enemy_ships'] -= 1
@@ -231,10 +237,12 @@ def validate_strike(target_coords, brd, owner):
             game_data['player_ships'] -= 1
         return brd
     if brd[target_row][target_col] == 3:
-        print('You already hit that target!')
+        print(RED + BOLD + 'You already hit that target!' + RESET)
+        time.sleep(2)
         return brd 
     if brd[target_row][target_col] == 4:
-        print('You already struck this target! Nothing but water here.')
+        print(CYAN + BOLD + 'You already struck this tile! Nothing but water here.' + RESET)
+        time.sleep(2)
         return brd 
 
 def update_board(comp_brd, plyr_brd):
@@ -289,17 +297,22 @@ def uname_registration():
     """
     Requests a username from the player and registers the input to the user data dictionary
     """
-    os.system('clear')
-    print(LOGO_TEXT)
-    print(UNAME_BANNER)
-    username_input = input("\nAdmiral, please choose a username. It has to be at least 1 character long:\n")
-    if username_input != "":
-        user['username'] = username_input
-        os.system('clear')
-        main_gameloop()
-    else:
+    valid_input = False
+    while valid_input == False:
         os.system('clear')
         print(LOGO_TEXT)
         print(UNAME_BANNER)
-        print("\nThe username cannot be empty.")
+        username_input = input("\nAdmiral, please choose a username. It has to be at least 1 character long:\n")
+        if username_input != "":
+            valid_input = True
+            user['username'] = username_input
+            os.system('clear')
+            main_gameloop()
+        else:
+            os.system('clear')
+            print(LOGO_TEXT)
+            print(UNAME_BANNER)
+            print(RED + BOLD + "\nThe username cannot be empty." + RESET, end='\r')
+            time.sleep(2)
+            print(LINE_CLEAR)
 
