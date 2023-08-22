@@ -57,22 +57,6 @@ game_data = {
 def clear_screen():
     os.system('cls')
     os.system('clear')
-    print(LINE_CLEAR)
-    print(LINE_UP)
-    print(LINE_CLEAR)
-    print(LINE_UP)
-    print(LINE_CLEAR)
-    print(LINE_UP)
-    print(LINE_CLEAR)
-    print(LINE_CLEAR)
-    print(LINE_UP)
-    print(LINE_CLEAR)
-    print(LINE_UP)
-    print(LINE_CLEAR)
-    print(LINE_UP)
-    print(LINE_CLEAR)
-    os.system('cls')
-    os.system('clear')
 
 def create_logo():
     """
@@ -303,8 +287,10 @@ def validate_strike(target_coords, brd, owner):
         brd[target_row][target_col] = 3
         if owner != "Computer":
             game_data['enemy_ships'] -= 1
+            user['score'] += 10
         else:
             game_data['player_ships'] -= 1
+            user['score'] -= 5
         return brd
     if brd[target_row][target_col] == 3:
         print(RED + BOLD + 'You already hit that target!' + RESET)
@@ -371,6 +357,7 @@ def main_gameloop():
     ongoing = True
     while ongoing:
         game_data['turn_count'] += 1
+        user['turns'] = game_data['turn_count']
         print(f'{computer_brd}')
         target = user_turn()
         computer_brd = validate_strike(target, computer_brd, user['username'])
