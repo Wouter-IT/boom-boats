@@ -1,9 +1,22 @@
 import sys 
+import gspread
 import time
 import os
+from google.oauth2.service_account import Credentials
 from colorama import Fore, Style
-from art import LOGO, LOGO_TEXT, MENU_BANNER, DIVIDER
+from art import LOGO, LOGO_TEXT, MENU_BANNER, DIVIDER, RULES_BANNER, BANNER, LDB_BANNER
 from run_game import uname_registration
+
+SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+    ]
+
+CREDS =  Credentials.from_service_account_file('creds.json')
+SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+SHEET = GSPREAD_CLIENT.open('bb_leaderboard')
 
 # Use of color came from Code Institute student kpetrauskas92 and his project Fury
 # https://github.com/kpetrauskas92/fury-p3/blob/main/game/game.py
@@ -14,6 +27,11 @@ RED = Fore.RED
 BOLD = Style.BRIGHT
 DIM = Style.DIM
 RESET = Style.RESET_ALL
+
+#LINE_CLEAR and the use of ANSI code comes from itnext.io and is used to remove error messages after a few seconds.
+# https://itnext.io/overwrite-previously-printed-lines-4218a9563527
+LINE_CLEAR = '\x1b[2K'
+LINE_UP = '\033[1A'
 
 # Typewriter function is heavily derived from "Learn Learn Scratch Tutorials" YouTube Channel
 # https://www.youtube.com/watch?v=2h8e0tXHfk0&t=135s
@@ -30,11 +48,60 @@ def typewriter(text):
         else:
             time.sleep(1)
 
+def clear_screen():
+    os.system('cls')
+    os.system('clear')
+
+def load_rules(origin):
+    '''
+    Loads the game rules on screen.
+    '''
+    clear_screen()
+    print(LOGO_TEXT)
+    print(RULES_BANNER)
+    print(BOLD + f'''
+    - Your goal is to destory all enemy ships.
+    - Each player has 5 ships and all ships only cover 1 tile.
+    - Shoot a target by choosing a row (letter) and a column (number).
+    - You score 10 points for every hit, lose 5 points for every hit on you.
+    - You earn bonus points for high accuracy (hitting most of your shots).
+    - Hits are marked with a red "H", Miss with a blue "M", 
+    - Your ships with a green "S", unknown sea tiles with a dim "~".
+    - The game ends when all ships of a player are sunk.
+    ''' + RESET)
+    print(BANNER)
+    
+    if origin == "menu":
+        press_enter = input('Press "Enter" to return to the menu.\n')
+    else:
+        press_enter = input('Press "Enter" to proceed to username registration.\n')
+
+def view_rules():
+    """
+    Checks if user wants to view the rules before playing, and if yes, displays rules on screen.
+    """
+    chosen = False
+    while chosen == False:
+        clear_screen()
+        print(LOGO_TEXT)
+        print(BANNER)
+        rules_answer = input('Would you like to see the rules before playing? (y/n)\n')
+        if rules_answer.lower() == "y":
+            chosen = True
+            return True
+        elif rules_answer.lower() == "n":
+            chosen = True
+            return False
+        else:
+            print(RED + BOLD + f"{rules_answer} is not a valid answer." + RESET, end='\r')
+            time.sleep(1.2)
+            print(LINE_CLEAR)
+
 def load_game():
     """
     Displays logo and game name and simulates the game loading with immersive text greeting the player as the admiral of a naval fleet.
     """
-    os.system('clear')
+    clear_screen()
     print(LOGO)
     typewriter("Greetings admiral, we were expecting you.\n")
     typewriter("Our fleet is ready for deployment.\n")
@@ -43,23 +110,28 @@ def load_game():
     typewriter("2...\n")
     typewriter("1...\n")
 
+def load_leaderboard():
+    clear_screen()
+    print(LOGO_TEXT)
+    print(LDB_BANNER)
+
 # Reused code from the Love Sandwiches assignment    
-def validate_input_int(input):
+def validate_input_int(user_input):
     """
     Validates user input by checking if it is an Int. Also returns a specific message for an empty string.
     """
     try:
-        input_int = int(input)
+        input_int = int(user_input)
         if input_int > 4 or input_int <= 0:
-            print(RED + BOLD + f"Your input has to be a number 1 to 4! Your input was: {input}, please try again.\n" + RESET)
+            print(RED + BOLD + f"Your input has to be a number 1 to 4! Your input was: {user_input}, please try again.\n" + RESET)
             time.sleep(2)
             return False
     except ValueError:
-        if input == "":
+        if user_input == "":
             print(RED + BOLD + "Your input has to be a number 1 to 4! Your input was empty, please try again.\n"  + RESET)
             time.sleep(2)
             return False
-        print(RED + BOLD + f"Your input has to be a number 1 to 4! Your input was: {input}, please try again.\n"  + RESET)
+        print(RED + BOLD + f"Your input has to be a number 1 to 4! Your input was: {user_input}, please try again.\n"  + RESET)
         time.sleep(2)
         return False
     return True
@@ -85,7 +157,7 @@ def load_main_menu_nav():
     Clears screen and loads the main menu and awaits user input for navigation.
     """
     while True:
-        os.system('clear')
+        clear_screen()
         print(LOGO_TEXT)
         print(MENU_BANNER)
         print(f'''
@@ -100,12 +172,14 @@ def load_main_menu_nav():
         if validate_input_int(nav_input):
             nav_input_int = int(nav_input)
             if nav_input_int == 1:
+                rules_before_play = view_rules()
+                if rules_before_play:
+                    load_rules("play")
                 uname_registration()
             elif nav_input_int == 2:
-                # load_rules()
-                print('Your input is ' + nav_input)
+                load_rules("menu")
             elif nav_input_int == 3:
-                #load_leaderboards()
+                #load_leaderboard()
                 print('Your input is ' + nav_input)
             elif nav_input_int == 4:
                 confirm = input('Are you certain you want to quit? Yes or no (y/n): \n')
