@@ -193,19 +193,66 @@ def computer_turn(plyr_brd):
     valid_comp_strike = False
     while valid_comp_strike == False:
         rdm_strike_row = random.randint(0,6)
-        print(rdm_strike_row)
         rdm_strike_col = random.randint(0,6)
-        print(rdm_strike_col)
-        print(plyr_brd[rdm_strike_row][rdm_strike_col])
         if plyr_brd[rdm_strike_row][rdm_strike_col] != 3 and plyr_brd[rdm_strike_row][rdm_strike_col] != 4:
             valid_comp_strike == True
             strike_valid = True
             break
-    # Process valid strike
+    # Process valid strike and prints selections to the terminal
     if strike_valid == True:
+        #  Print selected row
+        if rdm_strike_row == 0:
+            print("Computer picked row 'A'")
+            time.sleep(0.8)
+        elif rdm_strike_row == 1:
+            print("Computer picked row 'B'")
+            time.sleep(0.8)
+        elif rdm_strike_row == 2:
+            print("Computer picked row 'C'")
+            time.sleep(0.8)
+        elif rdm_strike_row == 3:
+            print("Computer picked row 'D'")
+            time.sleep(0.8)
+        elif rdm_strike_row == 4:
+            print("Computer picked row 'E'.")
+            time.sleep(0.8)
+        elif rdm_strike_row == 5:
+            print("Computer picked row 'F'.")
+            time.sleep(0.8)
+        elif rdm_strike_row == 6:
+            print("Computer picked row 'G'.")
+            time.sleep(0.8)
+        
+        # Print slected column
+        if rdm_strike_col == 0:
+            print("Computer picked row '1'")
+            time.sleep(0.8)
+        elif rdm_strike_col == 1:
+            print("Computer picked row '2'")
+            time.sleep(0.8)
+        elif rdm_strike_col == 2:
+            print("Computer picked row '3'")
+            time.sleep(0.8)
+        elif rdm_strike_col == 3:
+            print("Computer picked row '4'")
+            time.sleep(0.8)
+        elif rdm_strike_col == 4:
+            print("Computer picked row '5'.")
+            time.sleep(0.8)
+        elif rdm_strike_col == 5:
+            print("Computer picked row '6'.")
+            time.sleep(0.8)
+        elif rdm_strike_col == 6:
+            print("Computer picked row '7'.")
+            time.sleep(0.8)
+        
         if plyr_brd[rdm_strike_row][rdm_strike_col] == 0:
+            print(GREEN + "The Computer Missed!" + RESET)
+            time.sleep(1)
             plyr_brd[rdm_strike_row][rdm_strike_col] = 4
         elif plyr_brd[rdm_strike_row][rdm_strike_col] == 2:
+            print(RED + "The Computer hits!" + RESET)
+            time.sleep(1)
             plyr_brd[rdm_strike_row][rdm_strike_col] = 3
             game_data['player_ships'] -= 1
     
@@ -221,14 +268,14 @@ def validate_strike(target_coords, brd, owner):
     if brd[target_row][target_col] == 0:
         print('You shoot..')
         time.sleep(1)
-        print(CYAN + 'Miss!' + RESET)
+        print(CYAN + 'You miss!' + RESET)
         time.sleep(1)
         brd[target_row][target_col] = 4
         return brd        
     if brd[target_row][target_col] == 1:
         print('You shoot..')
         time.sleep(1)
-        print(RED + 'Hit!!' + RESET)
+        print(RED + "That's a Hit!!" + RESET)
         time.sleep(1)
         brd[target_row][target_col] = 3
         if owner != "Computer":
@@ -273,6 +320,7 @@ def main_gameloop():
     ongoing = True
     while ongoing:
         game_data['turn_count'] += 1
+        print(f'{computer_brd}')
         target = user_turn()
         computer_brd = validate_strike(target, computer_brd, user['username'])
         update_board(computer_brd, player_brd)
