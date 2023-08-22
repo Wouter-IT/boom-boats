@@ -1,8 +1,19 @@
 import sys 
 import time
 import os
+from colorama import Fore, Style
 from art import LOGO, LOGO_TEXT, MENU_BANNER, DIVIDER
 from run_game import uname_registration
+
+# Use of color came from Code Institute student kpetrauskas92 and his project Fury
+# https://github.com/kpetrauskas92/fury-p3/blob/main/game/game.py
+GREEN = Fore.GREEN
+CYAN = Fore.CYAN
+YELLOW = Fore.YELLOW
+RED = Fore.RED
+BOLD = Style.BRIGHT
+DIM = Style.DIM
+RESET = Style.RESET_ALL
 
 # Typewriter function is heavily derived from "Learn Learn Scratch Tutorials" YouTube Channel
 # https://www.youtube.com/watch?v=2h8e0tXHfk0&t=135s
@@ -39,13 +50,16 @@ def validate_input_int(input):
     try:
         input_int = int(input)
         if input_int > 4 or input_int <= 0:
-            print(f"Your input has to be a number 1 to 4! Your input was: {input}, please try again.\n")
+            print(RED + BOLD + f"Your input has to be a number 1 to 4! Your input was: {input}, please try again.\n" + RESET)
+            time.sleep(2)
             return False
     except ValueError:
         if input == "":
-            print("Your input has to be a number 1 to 4! Your input was empty, please try again.\n")
+            print(RED + BOLD + "Your input has to be a number 1 to 4! Your input was empty, please try again.\n"  + RESET)
+            time.sleep(2)
             return False
-        print(f"Your input has to be a number 1 to 4! Your input was: {input}, please try again.\n")
+        print(RED + BOLD + f"Your input has to be a number 1 to 4! Your input was: {input}, please try again.\n"  + RESET)
+        time.sleep(2)
         return False
     return True
 
@@ -54,13 +68,14 @@ def confirm_quit(input):
     Validates the user input and checks whether it is yes or no. Prints a message accordingly and terminates or continues the program.
     """
     if input.lower() == "y":
+        typewriter('Click the "Restart Game" button to reboot the game.\n')
         typewriter('Terminating program..\n')
         return True
     elif input.lower() == "n":
         typewriter('Returning to menu..\n')
         return False
     else:
-        typewriter('Invalid input, returning to menu..\n')
+        typewriter(RED + BOLD + 'Invalid input, returning to menu..\n' + RESET)
         return False
 
 
@@ -92,11 +107,11 @@ def load_main_menu_nav():
                 #load_leaderboards()
                 print('Your input is ' + nav_input)
             elif nav_input_int == 4:
-                confirm = input('Are you certain you want to quit? Type y for Yes and n for No: \n')
+                confirm = input('Are you certain you want to quit? Yes or no (y/n): \n')
                 if confirm_quit(confirm):
                     return False
             else:
-                print('Error, invalid input')
+                print(RED + BOLD + 'Error, invalid input' + RESET)
     
 
 
