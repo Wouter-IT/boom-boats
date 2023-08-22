@@ -64,7 +64,7 @@ def print_brd(brd, owner):
     """
     Prints the playing board with the appropriate row and column headers
     """
-    print(owner + "'s broad:")
+    print(BOLD + owner + "'s broad:" + RESET)
     numerals_top = BOLD + f"     1  2  3  4  5  6  7  " + RESET
     border_top_bottom = f"   +---------------------+"
     print(numerals_top)
@@ -118,10 +118,10 @@ def user_turn():
     Then proceeds to pack the coordinates in a list for the strike validation.
     """
     strike_list = []
-    print(f"Enemy ships intact: {game_data['enemy_ships']}    Your ships intact: {game_data['player_ships']}    Turn: {game_data['turn_count']}\n")
+    print(RED + f"Enemy ships intact: {game_data['enemy_ships']}" + RESET + GREEN + f"    Your ships intact: {game_data['player_ships']}" + RESET + f"    Turn: {game_data['turn_count']}\n")
     picked_row = False
     while picked_row == False:
-        row_coords = input("Choose a row for your next stike (A, B, C, D, E, F, G): \n")
+        row_coords = input("Choose a row for your next strike (A, B, C, D, E, F, G): \n")
         row_coords = row_coords.lower()
         if row_coords == 'a':
                 row_coords_int = 0
@@ -152,8 +152,9 @@ def user_turn():
                 strike_list.append(row_coords_int)
                 picked_row = True
         else:
-            print("Your input was invalid, please try again.")
+            print(RED + BOLD + f"Your input: '{row_coords}' was invalid, please try again." + RESET, end='\r')
             time.sleep(2)
+            print(end=LINE_CLEAR)
             continue
     
     picked_col = False
@@ -162,7 +163,7 @@ def user_turn():
         try:
             col_coords_int = int(col_coords)
             if col_coords_int < 1 or col_coords_int > 7:
-                print(RED + BOLD + f"Your input has to be a number between 1 to 7! Your input was: {col_coords_int}, please try again." + RESET, end='\r')
+                print(RED + BOLD + f"Your input has to be a number between 1 to 7! Your input was: '{col_coords_int}', please try again." + RESET, end='\r')
                 time.sleep(2)
                 print(end=LINE_CLEAR)
                 continue
@@ -172,7 +173,7 @@ def user_turn():
                 time.sleep(2)
                 print(end=LINE_CLEAR)
                 continue
-            print(RED + BOLD + f"Your input has to be a number between 1 to 7! Your input was: {col_coords}, please try again." + RESET, end='\r')
+            print(RED + BOLD + f"Your input has to be a number between 1 to 7! Your input was: '{col_coords}', please try again." + RESET, end='\r')
             time.sleep(2)
             print(end=LINE_CLEAR)
             continue
