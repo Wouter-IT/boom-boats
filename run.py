@@ -114,15 +114,39 @@ def load_game():
 # Gspread official documentation used to select worksheet, create a list of dictionaries.
 # https://docs.gspread.org/en/latest/user-guide.html#selecting-a-worksheet
 def load_leaderboard():
+    '''
+    Retreives the sheet data from the bb_leaderboard google spreadsheet, sorts the data from highest to lowest, 
+    and proceeds to print the top 10 entries to the screen,
+    '''
     clear_screen()
     print(LOGO_TEXT)
     print(LDB_BANNER)
 
     ldb_sheet = SHEET.worksheet('leaderboard')
     unsorted_scores = ldb_sheet.get_all_records()
+    # The use of the lambda expression in order to sort a list of dicts on a spcific key value found on Note.NKMK.me
+    #https://note.nkmk.me/en/python-lambda-usage/
     sorted_scores = sorted(unsorted_scores, key=lambda U_S: U_S['Score'], reverse=True)
-    print(f'{sorted_scores}')
-    wait = input("Waiting")
+    
+    #Prints the column headers and division line in bold with even spacing.
+    print(CYAN + BOLD + f'\n   {"Position:":12s}    {"Username:":15s}    {"Score:":7s}' + RESET)
+    print(BOLD + '   ' + ('-' * 41) + RESET)
+    
+    '''
+    Setup loop that prints the top 10 leaderboard entries with even spacing between each column no matter the string length.
+    Even spacing fist seen on the Fury project, explanation found on Stack overflow by user Tom Karzes
+    Fury project by kpetrauskas92 https://github.com/kpetrauskas92/fury-p3/blob/main/modules/leaderboard.py line 33
+    https://stackoverflow.com/questions/33323715/python-evenly-space-output-data-with-varying-string-lengths
+    '''
+    top_10_counter = 1
+    i = 0
+    while top_10_counter < 11:
+        counter_to_string = str(top_10_counter) + '.'
+        print(f"   {counter_to_string:12s}    {sorted_scores[i]['Username']:15s}    {str(sorted_scores[i]['Score']):5s}")
+        top_10_counter += 1
+        i += 1
+
+    return_to_menu = input('\nPress "Enter" to return to the menu.\n')
     
 
 # Reused code from the Love Sandwiches assignment    

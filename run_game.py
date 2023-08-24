@@ -55,7 +55,6 @@ game_data = {
 # end= to prevent new line after print was found on EnterpriseDNA blog
 # https://blog.enterprisedna.co/python-print-without-newline-easy-step-by-step-guide/#:~:text=To%20print%20without%20a%20new,")
 def clear_screen():
-    os.system('cls')
     os.system('clear')
 
 def create_logo():
@@ -425,25 +424,27 @@ def uname_registration():
         clear_screen()
         print(LOGO_TEXT)
         print(UNAME_BANNER)
-        username_input = input("\nAdmiral, please choose a username. It has to be at least 1 character long:\n")
+        username_input = input("\nAdmiral, please choose a username. It has to be at least 3 to max 10 characters long:\n")
         only_space = username_input.isspace()
         if only_space:
             clear_screen()
             print(LOGO_TEXT)
             print(UNAME_BANNER)
-            print(RED + BOLD + "\nThe username cannot be just whitespace." + RESET, end='\r')
+            print(RED + BOLD + "The username cannot be just whitespace." + RESET, end='\r')
             time.sleep(1.8)
             print(LINE_CLEAR)
         elif username_input != "":
-            valid_input = True
-            user['username'] = username_input
-            clear_screen()
-            main_gameloop()
+            if len(username_input) >= 3 and len(username_input) <= 10:
+                valid_input = True
+                user['username'] = username_input
+                clear_screen()
+                main_gameloop()
+            else:
+                print(RED + BOLD + "Has to be between 3 and 10 characters long" + RESET, end='\r')
+                time.sleep(1.8)
+                print(LINE_CLEAR)
         else:
-            clear_screen()
-            print(LOGO_TEXT)
-            print(UNAME_BANNER)
-            print(RED + BOLD + "\nThe username cannot be empty." + RESET, end='\r')
+            print(RED + BOLD + "The username cannot be empty." + RESET, end='\r')
             time.sleep(1.8)
             print(LINE_CLEAR)
 
