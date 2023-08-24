@@ -1,12 +1,24 @@
 import sys
+import gspread
+import time
 import os
 import random
 import copy
-import time
+from google.oauth2.service_account import Credentials
 from colorama import Fore, Style
 from art import LOGO_TEXT, DIVIDER, BANNER, UNAME_BANNER
 from settings import user
 
+SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+    ]
+
+CREDS =  Credentials.from_service_account_file('creds.json')
+SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+SHEET = GSPREAD_CLIENT.open('bb_leaderboard')
 
 # Use of color came from Code Institute student kpetrauskas92 and his project Fury
 # https://github.com/kpetrauskas92/fury-p3/blob/main/game/game.py
@@ -55,6 +67,9 @@ game_data = {
 # end= to prevent new line after print was found on EnterpriseDNA blog
 # https://blog.enterprisedna.co/python-print-without-newline-easy-step-by-step-guide/#:~:text=To%20print%20without%20a%20new,")
 def clear_screen():
+    '''
+    Clears the screen
+    '''
     os.system('clear')
 
 def create_logo():
@@ -353,6 +368,16 @@ def bonus_score(win):
             user['score'] += 10
             print(GREEN + BOLD + "You score 10 bonus points for an average performance" + RESET)
 
+def push_to_ldb():
+    '''
+    Pushes run score and username to leaderboard worksheet.
+    '''
+    game_data_lst = []
+    game_data_lst.append(user['username'])
+    game_data_lst.append(user['score'])
+    
+    ldb_sheet = SHEET.worksheet('leaderboard')
+    ldb_SHEET.append_row(game_data_lst)
 
 def reset_game():
     ''''

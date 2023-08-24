@@ -49,7 +49,9 @@ def typewriter(text):
             time.sleep(1)
 
 def clear_screen():
-    os.system('cls')
+    '''
+    Clears the screen
+    '''
     os.system('clear')
 
 def load_rules(origin):
