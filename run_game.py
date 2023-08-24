@@ -15,12 +15,13 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
     ]
 
-CREDS =  Credentials.from_service_account_file('creds.json')
+CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('bb_leaderboard')
 
-# Use of color came from Code Institute student kpetrauskas92 and his project Fury
+# Use of color came from Code Institute student kpetrauskas92 and
+# his project "Fury".
 # https://github.com/kpetrauskas92/fury-p3/blob/main/game/game.py
 GREEN = Fore.GREEN
 CYAN = Fore.CYAN
@@ -30,10 +31,12 @@ BOLD = Style.BRIGHT
 DIM = Style.DIM
 RESET = Style.RESET_ALL
 
-#LINE_CLEAR and the use of ANSI code comes from itnext.io and is used to remove error messages after a few seconds.
+# LINE_CLEAR and the use of ANSI code comes from itnext.io and is used to
+# remove error messages after a few seconds.
 # https://itnext.io/overwrite-previously-printed-lines-4218a9563527
 LINE_CLEAR = '\x1b[2K'
 LINE_UP = '\033[1A'
+
 
 # end= to prevent new line after print was found on EnterpriseDNA blog
 # https://blog.enterprisedna.co/python-print-without-newline-easy-step-by-step-guide/#:~:text=To%20print%20without%20a%20new,")
@@ -43,12 +46,14 @@ def clear_screen():
     '''
     os.system('clear')
 
+
 def create_logo():
     """
     Prints logo and banner on screen.
     """
     print(LOGO_TEXT)
     print(BANNER)
+
 
 def print_brd(brd, owner):
     """
@@ -60,8 +65,10 @@ def print_brd(brd, owner):
     print(numerals_top)
     print(border_top_bottom)
     row_count = 0
-    row_capitals = [BOLD + ' A |' + RESET, BOLD + ' B |' + RESET, BOLD + ' C |' + RESET, BOLD + ' D |' + RESET,
-    BOLD + ' E |' + RESET, BOLD + ' F |' + RESET, BOLD + ' G |' + RESET]
+    row_capitals = [BOLD + ' A |' + RESET, BOLD + ' B |' + RESET,
+                    BOLD + ' C |' + RESET, BOLD + ' D |' + RESET,
+                    BOLD + ' E |' + RESET, BOLD + ' F |' + RESET,
+                    BOLD + ' G |' + RESET]
     for row in brd:
         print(row_capitals[row_count], end="")
         row_count = row_count + 1
@@ -71,85 +78,91 @@ def print_brd(brd, owner):
             elif cell == 2:
                 print(GREEN + " " + "S" + " " + RESET, end='')
             elif cell == 3:
-                print(RED + " " + "H" + " " + RESET, end='') 
+                print(RED + " " + "H" + " " + RESET, end='')
             elif cell == 4:
-                print(CYAN + " " + "M" + " " + RESET, end='')    
-        print("|")    
+                print(CYAN + " " + "M" + " " + RESET, end='')
+        print("|")
     print(border_top_bottom + "\n")
     print(DIVIDER)
 
+
 def ship_placement(owner_brd, owner):
     """
-    Places ships on computer and player board an verifies if there isn't already a ship on the given tile.
+    Places ships on computer and player board an verifies if
+    there isn't already a ship on the given tile.
     """
     ship_counter = 0
     if owner != "Computer":
         while ship_counter < 5:
             # Random nr generation found on W3Schools
             # https://www.w3schools.com/python/ref_random_randint.asp
-            rdm_row = random.randint(0,6)
-            rdm_col = random.randint(0,6)
+            rdm_row = random.randint(0, 6)
+            rdm_col = random.randint(0, 6)
             if owner_brd[rdm_row][rdm_col] == 0:
                 owner_brd[rdm_row][rdm_col] = 2
                 ship_counter += 1
     else:
         while ship_counter < 5:
-            rdm_row = random.randint(0,6)
-            rdm_col = random.randint(0,6)
+            rdm_row = random.randint(0, 6)
+            rdm_col = random.randint(0, 6)
             if owner_brd[rdm_row][rdm_col] == 0:
-                    owner_brd[rdm_row][rdm_col] = 1
-                    ship_counter += 1
-    return owner_brd        
+                owner_brd[rdm_row][rdm_col] = 1
+                ship_counter += 1
+    return owner_brd
 
 
 def user_turn():
     """
-    Process user input for strike coordinates and checks if the inputs are valid, throwing an error in case they are invalid.
-    Then proceeds to pack the coordinates in a list for the strike validation.
+    Process user input for strike coordinates and checks if
+    the inputs are valid, throwing an error in case they are
+    invalid. Then proceeds to pack the coordinates in a list
+    for the strike validation.
     """
     strike_list = []
-    print(RED + f"Enemy ships intact: {game_data['enemy_ships']}" + RESET + GREEN + f"    Your ships intact: {game_data['player_ships']}" + RESET + 
-    f"    Score: {user['score']}" + f"    Turn: {game_data['turn_count']}\n")
+    print(RED + f"Enemy ships intact: {game_data['enemy_ships']}" + RESET +
+          GREEN + f"    Your ships intact: {game_data['player_ships']}" + RESET
+          + f"    Score: {user['score']}" + f"    Turn: {game_data['turn_count']}\n")
+          
     picked_row = False
-    while picked_row == False:
+    while picked_row is False:
         row_coords = input("Choose a row for your next strike (A, B, C, D, E, F, G): \n")
         row_coords = row_coords.lower()
         if row_coords == 'a':
-                row_coords_int = 0
-                strike_list.append(row_coords_int)
-                picked_row = True
+            row_coords_int = 0
+            strike_list.append(row_coords_int)
+            picked_row = True
         elif row_coords == 'b':
-                row_coords_int = 1
-                strike_list.append(row_coords_int)
-                picked_row = True
+            row_coords_int = 1
+            strike_list.append(row_coords_int)
+            picked_row = True
         elif row_coords == 'c':
-                row_coords_int = 2
-                strike_list.append(row_coords_int)
-                picked_row = True
+            row_coords_int = 2
+            strike_list.append(row_coords_int)
+            picked_row = True
         elif row_coords == 'd':
-                row_coords_int = 3
-                strike_list.append(row_coords_int)
-                picked_row = True
+            row_coords_int = 3
+            strike_list.append(row_coords_int)
+            picked_row = True
         elif row_coords == 'e':
-                row_coords_int = 4
-                strike_list.append(row_coords_int)
-                picked_row = True
+            row_coords_int = 4
+            strike_list.append(row_coords_int)
+            picked_row = True
         elif row_coords == 'f':
-                row_coords_int = 5
-                strike_list.append(row_coords_int)
-                picked_row = True
+            row_coords_int = 5
+            strike_list.append(row_coords_int)
+            picked_row = True
         elif row_coords == 'g':
-                row_coords_int = 6
-                strike_list.append(row_coords_int)
-                picked_row = True
+            row_coords_int = 6
+            strike_list.append(row_coords_int)
+            picked_row = True
         else:
             print(RED + BOLD + f"Your input: '{row_coords}' was invalid, please try again." + RESET, end='\r')
             time.sleep(2)
             print(end=LINE_CLEAR)
             continue
-    
+
     picked_col = False
-    while picked_col == False:
+    while picked_col is False:
         col_coords = input("Now choose a column for your next stike (1, 2, 3, 4, 5, 6, 7): \n")
         try:
             col_coords_int = int(col_coords)
@@ -174,24 +187,25 @@ def user_turn():
 
     return strike_list
 
+
 def computer_turn(plyr_brd):
     """
-    Processes the computers turn, randomly chooses target, validates if it is a 
-    valid target, and then proceeds to print the selection and a miss/hit 
+    Processes the computers turn, randomly chooses target, validates if it is a
+    valid target, and then proceeds to print the selection and a miss/hit
     confirm to the screen before it registers the strike on the player_brd.
     """
     # Select tile to strike and validate target.
     strike_valid = False
     valid_comp_strike = False
-    while valid_comp_strike == False:
-        rdm_strike_row = random.randint(0,6)
-        rdm_strike_col = random.randint(0,6)
+    while valid_comp_strike is False:
+        rdm_strike_row = random.randint(0, 6)
+        rdm_strike_col = random.randint(0, 6)
         if plyr_brd[rdm_strike_row][rdm_strike_col] != 3 and plyr_brd[rdm_strike_row][rdm_strike_col] != 4:
-            valid_comp_strike == True
+            valid_comp_strike is True
             strike_valid = True
             break
     # Process valid strike and prints selections to the terminal
-    if strike_valid == True:
+    if strike_valid is True:
         #  Print selected row
         if rdm_strike_row == 0:
             print("Computer picked row 'A'")
@@ -214,7 +228,7 @@ def computer_turn(plyr_brd):
         elif rdm_strike_row == 6:
             print("Computer picked row 'G'.")
             time.sleep(0.8)
-        
+
         # Print selected column
         if rdm_strike_col == 0:
             print("Computer picked row '1'")
@@ -237,7 +251,7 @@ def computer_turn(plyr_brd):
         elif rdm_strike_col == 6:
             print("Computer picked row '7'.")
             time.sleep(0.8)
-        
+
         # Processes hit/miss and prints it to the terminal
         if plyr_brd[rdm_strike_row][rdm_strike_col] == 0:
             print(GREEN + "The Computer Missed!" + RESET)
@@ -249,12 +263,13 @@ def computer_turn(plyr_brd):
             plyr_brd[rdm_strike_row][rdm_strike_col] = 3
             game_data['player_ships'] -= 1
             user['score'] -= 5
-    
+
     return plyr_brd
+
 
 def validate_strike(target_coords, brd, owner):
     """
-    Checks the input coordinates with current board state and determines if the 
+    Checks the input coordinates with current board state and determines if the
     shot was hit, miss or on a ship that has already been sunk.
     """
     target_col = target_coords.pop()
@@ -265,7 +280,7 @@ def validate_strike(target_coords, brd, owner):
         print(CYAN + 'You miss!' + RESET)
         time.sleep(1)
         brd[target_row][target_col] = 4
-        return brd        
+        return brd
     if brd[target_row][target_col] == 1:
         print('You shoot..')
         time.sleep(1)
@@ -279,11 +294,12 @@ def validate_strike(target_coords, brd, owner):
     if brd[target_row][target_col] == 3:
         print(RED + BOLD + 'You already hit that target!' + RESET)
         time.sleep(2)
-        return brd 
+        return brd
     if brd[target_row][target_col] == 4:
         print(CYAN + BOLD + 'You already struck this tile! Nothing but water here.' + RESET)
         time.sleep(2)
-        return brd 
+        return brd
+
 
 def update_board(comp_brd, plyr_brd):
     """
@@ -294,12 +310,14 @@ def update_board(comp_brd, plyr_brd):
     print_brd(comp_brd, "Computer")
     print_brd(plyr_brd, user['username'])
 
+
 def validate_answer(user_input):
     """
-    Validates the user input and checks whether it is yes or no. Prints a message accordingly and terminates or continues the program.
+    Validates the user input and checks whether it is yes or no.
+    Prints a message accordingly and terminates or continues the program.
     """
     is_valid = False
-    while is_valid == False:
+    while is_valid is False:
         if user_input.lower() == "y":
             is_valid = True
             return True
@@ -312,9 +330,11 @@ def validate_answer(user_input):
             print(LINE_CLEAR)
             user_input = input('Do you wish to play again? (y/n)\n')
 
+
 def bonus_score(win):
     '''
-    Check if the player won and provides bonus points accordingly. Player earns points for winning and effective shooting.
+    Check if the player won and provides bonus points accordingly.
+    Player earns points for winning and effective shooting.
     '''
     if win:
         user['score'] += 10
@@ -322,7 +342,7 @@ def bonus_score(win):
     else:
         user['score'] -= 10
         print(RED + BOLD + "You lose 10 points for defeat!" + RESET)
-    
+
     if win:
         if game_data['turn_count'] <= 5:
             user['score'] += 50
@@ -337,6 +357,7 @@ def bonus_score(win):
             user['score'] += 10
             print(GREEN + BOLD + "You score 10 bonus points for an average performance" + RESET)
 
+
 def push_to_ldb():
     '''
     Pushes run score and username to leaderboard worksheet.
@@ -344,9 +365,10 @@ def push_to_ldb():
     game_data_lst = []
     game_data_lst.append(user['username'])
     game_data_lst.append(user['score'])
-    
+
     ldb_sheet = SHEET.worksheet('leaderboard')
     ldb_sheet.append_row(game_data_lst)
+
 
 def reset_game():
     ''''
@@ -358,11 +380,12 @@ def reset_game():
     user['score'] = 0
     user['turns'] = 0
 
+
 def main_gameloop():
     """
-    Executes the main game loop
+    Executes the main game loop.
     """
-    #Creates visuals and distributes ships on player and computer board
+    # Creates visuals and distributes ships on player and computer board
     create_logo()
     # copy.deepcopy bug fix for copying the reference to the entitiy 'brd' as opposed to the actual list of lists. Found on stack Overflow by user Felix King
     # https://stackoverflow.com/questions/2612802/how-do-i-clone-a-list-so-that-it-doesnt-change-unexpectedly-after-assignment
@@ -411,12 +434,13 @@ def main_gameloop():
         print('Returning to menu...')
         time.sleep(1.2)
 
+
 def uname_registration():
     """
     Requests a username from the player and registers the input to the user data dictionary
     """
     valid_input = False
-    while valid_input == False:
+    while valid_input is False:
         clear_screen()
         print(LOGO_TEXT)
         print(UNAME_BANNER)

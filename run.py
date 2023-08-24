@@ -1,4 +1,4 @@
-import sys 
+import sys
 import gspread
 import time
 import os
@@ -13,7 +13,7 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
     ]
 
-CREDS =  Credentials.from_service_account_file('creds.json')
+CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('bb_leaderboard')
@@ -28,10 +28,11 @@ BOLD = Style.BRIGHT
 DIM = Style.DIM
 RESET = Style.RESET_ALL
 
-#LINE_CLEAR and the use of ANSI code comes from itnext.io and is used to remove error messages after a few seconds.
+# LINE_CLEAR and the use of ANSI code comes from itnext.io and is used to remove error messages after a few seconds.
 # https://itnext.io/overwrite-previously-printed-lines-4218a9563527
 LINE_CLEAR = '\x1b[2K'
 LINE_UP = '\033[1A'
+
 
 # Typewriter function is heavily derived from "Learn Learn Scratch Tutorials" YouTube Channel
 # https://www.youtube.com/watch?v=2h8e0tXHfk0&t=135s
@@ -48,11 +49,13 @@ def typewriter(text):
         else:
             time.sleep(1)
 
+
 def clear_screen():
     '''
     Clears the screen
     '''
     os.system('clear')
+
 
 def load_rules(origin):
     '''
@@ -67,23 +70,24 @@ def load_rules(origin):
     - Shoot a target by choosing a row (letter) and a column (number).
     - You score 10 points for every hit, lose 5 points for every hit on you.
     - You earn bonus points for high accuracy (hitting most of your shots).
-    - Hits are marked with a red "H", Miss with a blue "M", 
+    - Hits are marked with a red "H", Miss with a blue "M".
     - Your ships with a green "S", unknown sea tiles with a dim "~".
     - The game ends when all ships of a player are sunk.
     ''' + RESET)
     print(BANNER)
-    
+
     if origin == "menu":
         press_enter = input('Press "Enter" to return to the menu.\n')
     else:
         press_enter = input('Press "Enter" to proceed to username registration.\n')
+
 
 def view_rules():
     """
     Checks if user wants to view the rules before playing, and if yes, displays rules on screen.
     """
     chosen = False
-    while chosen == False:
+    while chosen is False:
         clear_screen()
         print(LOGO_TEXT)
         print(BANNER)
@@ -98,6 +102,7 @@ def view_rules():
             print(RED + BOLD + f"{rules_answer} is not a valid answer." + RESET, end='\r')
             time.sleep(1.2)
             print(LINE_CLEAR)
+
 
 def load_game():
     """
@@ -117,8 +122,8 @@ def load_game():
 # https://docs.gspread.org/en/latest/user-guide.html#selecting-a-worksheet
 def load_leaderboard():
     '''
-    Retreives the sheet data from the bb_leaderboard google spreadsheet, sorts the data from highest to lowest, 
-    and proceeds to print the top 10 entries to the screen,
+    Retreives the sheet data from the bb_leaderboard google spreadsheet, sorts the data from highest to lowest,
+    and proceeds to print the top 10 entries to the screen.
     '''
     clear_screen()
     print(LOGO_TEXT)
@@ -127,13 +132,13 @@ def load_leaderboard():
     ldb_sheet = SHEET.worksheet('leaderboard')
     unsorted_scores = ldb_sheet.get_all_records()
     # The use of the lambda expression in order to sort a list of dicts on a spcific key value found on Note.NKMK.me
-    #https://note.nkmk.me/en/python-lambda-usage/
+    # https://note.nkmk.me/en/python-lambda-usage/
     sorted_scores = sorted(unsorted_scores, key=lambda U_S: U_S['Score'], reverse=True)
-    
-    #Prints the column headers and division line in bold with even spacing.
+
+    # Prints the column headers and division line in bold with even spacing.
     print(CYAN + BOLD + f'\n   {"Position:":12s}    {"Username:":15s}    {"Score:":7s}' + RESET)
     print(BOLD + '   ' + ('-' * 41) + RESET)
-    
+
     '''
     Setup loop that prints the top 10 leaderboard entries with even spacing between each column no matter the string length.
     Even spacing fist seen on the Fury project, explanation found on Stack overflow by user Tom Karzes
@@ -148,9 +153,10 @@ def load_leaderboard():
         top_10_counter += 1
         i += 1
 
-    return_to_menu = input('\nPress "Enter" to return to the menu.\n') 
+    return_to_menu = input('\nPress "Enter" to return to the menu.\n')
 
-# Reused code from the Love Sandwiches assignment    
+
+# Reused code from the Love Sandwiches assignment
 def validate_input_int(user_input):
     """
     Validates user input by checking if it is an Int. Also returns a specific message for an empty string.
@@ -163,13 +169,14 @@ def validate_input_int(user_input):
             return False
     except ValueError:
         if user_input == "":
-            print(RED + BOLD + "Your input has to be a number 1 to 4! Your input was empty, please try again.\n"  + RESET)
+            print(RED + BOLD + "Your input has to be a number 1 to 4! Your input was empty, please try again.\n" + RESET)
             time.sleep(2)
             return False
-        print(RED + BOLD + f"Your input has to be a number 1 to 4! Your input was: {user_input}, please try again.\n"  + RESET)
+        print(RED + BOLD + f"Your input has to be a number 1 to 4! Your input was: {user_input}, please try again.\n" + RESET)
         time.sleep(2)
         return False
     return True
+
 
 def confirm_quit(user_input):
     """
@@ -185,6 +192,7 @@ def confirm_quit(user_input):
     else:
         typewriter(RED + BOLD + 'Invalid input, returning to menu..\n' + RESET)
         return False
+
 
 def load_main_menu_nav():
     """
@@ -203,7 +211,7 @@ def load_main_menu_nav():
         print(DIVIDER)
 
         # Reused code from the Love Sandwiches assignment
-        nav_input= input("Choose a number between 1 and 4 and press 'Enter' to navigate: ")
+        nav_input = input("Choose a number between 1 and 4 and press 'Enter' to navigate: \n")
         if validate_input_int(nav_input):
             nav_input_int = int(nav_input)
             if nav_input_int == 1:
@@ -220,7 +228,8 @@ def load_main_menu_nav():
                 if confirm_quit(confirm):
                     return False
             else:
-                print(RED + BOLD + 'Error, invalid input' + RESET)  
+                print(RED + BOLD + 'Error, invalid input' + RESET)
+
 
 def main():
     """
@@ -229,5 +238,5 @@ def main():
     load_game()
     nav = load_main_menu_nav()
 
-main()
 
+main()
