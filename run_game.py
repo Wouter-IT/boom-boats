@@ -7,7 +7,7 @@ import copy
 from google.oauth2.service_account import Credentials
 from colorama import Fore, Style
 from art import LOGO_TEXT, DIVIDER, BANNER, UNAME_BANNER
-from settings import user
+from settings import user, BRD, game_data
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -34,35 +34,6 @@ RESET = Style.RESET_ALL
 # https://itnext.io/overwrite-previously-printed-lines-4218a9563527
 LINE_CLEAR = '\x1b[2K'
 LINE_UP = '\033[1A'
-
-"""
-Creates a list of lists with intigers assigned to it that function as tiles for the game and and display the game data.
-Function call upon these list indexes to process computer and player input needed to operate the main game loop
-Numbers stand for the following:
-0 = empty tile
-1 = computer hidden ship
-2 = player ship
-3 = hit ship
-4 = missed shot
-""" 
-BRD = [
-        [0, 0, 0, 0, 0, 0, 0,],
-        [0, 0, 0, 0, 0, 0, 0,],
-        [0, 0, 0, 0, 0, 0, 0,],
-        [0, 0, 0, 0, 0, 0, 0,],
-        [0, 0, 0, 0, 0, 0, 0,],
-        [0, 0, 0, 0, 0, 0, 0,],
-        [0, 0, 0, 0, 0, 0, 0,]
-]
-
-"""
-Stores game data to display on screen the enemy/player ships that are left as well as the turn count.
-""" 
-game_data = {
-    "enemy_ships":  5,
-    "player_ships": 5,
-    "turn_count": 0
-}
 
 # end= to prevent new line after print was found on EnterpriseDNA blog
 # https://blog.enterprisedna.co/python-print-without-newline-easy-step-by-step-guide/#:~:text=To%20print%20without%20a%20new,")
@@ -277,6 +248,7 @@ def computer_turn(plyr_brd):
             time.sleep(1)
             plyr_brd[rdm_strike_row][rdm_strike_col] = 3
             game_data['player_ships'] -= 1
+            user['score'] -= 5
     
     return plyr_brd
 
@@ -303,9 +275,6 @@ def validate_strike(target_coords, brd, owner):
         if owner != "Computer":
             game_data['enemy_ships'] -= 1
             user['score'] += 10
-        else:
-            game_data['player_ships'] -= 1
-            user['score'] -= 5
         return brd
     if brd[target_row][target_col] == 3:
         print(RED + BOLD + 'You already hit that target!' + RESET)
