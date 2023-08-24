@@ -115,7 +115,7 @@ def ship_placement(owner_brd, owner):
     if owner != "Computer":
         while ship_counter < 5:
             # Random nr generation found on W3Schools
-            #https://www.w3schools.com/python/ref_random_randint.asp
+            # https://www.w3schools.com/python/ref_random_randint.asp
             rdm_row = random.randint(0,6)
             rdm_col = random.randint(0,6)
             if owner_brd[rdm_row][rdm_col] == 0:
@@ -377,7 +377,7 @@ def push_to_ldb():
     game_data_lst.append(user['score'])
     
     ldb_sheet = SHEET.worksheet('leaderboard')
-    ldb_SHEET.append_row(game_data_lst)
+    ldb_sheet.append_row(game_data_lst)
 
 def reset_game():
     ''''
@@ -417,6 +417,7 @@ def main_gameloop():
             ongoing = False
             print(GREEN + BOLD + ">>> You are victorious! <<<" + RESET)
             bonus_score(True)
+            push_to_ldb()
             print(BOLD + f"\nYou completed your run with a total of {user['score']} points. Your achievements are saved to the leaderboard." + RESET)
             continue
         player_brd = computer_turn(player_brd)
@@ -425,6 +426,7 @@ def main_gameloop():
             update_board(computer_brd, player_brd)
             print(RED + BOLD + ">>> You have been defeated! <<<" + RESET)
             bonus_score(False)
+            push_to_ldb()
             print(BOLD + f"\nYou completed your run with a total of {user['score']} points. Your achievements are saved to the leaderboard." + RESET)
             continue
         update_board(computer_brd, player_brd)
@@ -452,9 +454,6 @@ def uname_registration():
         username_input = input("\nAdmiral, please choose a username. It has to be at least 3 to max 10 characters long:\n")
         only_space = username_input.isspace()
         if only_space:
-            clear_screen()
-            print(LOGO_TEXT)
-            print(UNAME_BANNER)
             print(RED + BOLD + "The username cannot be just whitespace." + RESET, end='\r')
             time.sleep(1.8)
             print(LINE_CLEAR)
