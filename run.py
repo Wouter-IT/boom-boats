@@ -148,8 +148,7 @@ def load_leaderboard():
         top_10_counter += 1
         i += 1
 
-    return_to_menu = input('\nPress "Enter" to return to the menu.\n')
-    
+    return_to_menu = input('\nPress "Enter" to return to the menu.\n') 
 
 # Reused code from the Love Sandwiches assignment    
 def validate_input_int(user_input):
@@ -187,7 +186,6 @@ def confirm_quit(user_input):
         typewriter(RED + BOLD + 'Invalid input, returning to menu..\n' + RESET)
         return False
 
-
 def load_main_menu_nav():
     """
     Clears screen and loads the main menu and awaits user input for navigation.
@@ -203,6 +201,7 @@ def load_main_menu_nav():
         4. Quit Game
         ''')
         print(DIVIDER)
+
         # Reused code from the Love Sandwiches assignment
         nav_input= input("Choose a number between 1 and 4 and press 'Enter' to navigate: ")
         if validate_input_int(nav_input):
@@ -221,15 +220,13 @@ def load_main_menu_nav():
                 if confirm_quit(confirm):
                     return False
             else:
-                print(RED + BOLD + 'Error, invalid input' + RESET)
-    
-
+                print(RED + BOLD + 'Error, invalid input' + RESET)  
 
 def main():
     """
     Run all program functions
     """
-    #load_game()
+    load_game()
     nav = load_main_menu_nav()
 
 main()

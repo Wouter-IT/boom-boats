@@ -440,4 +440,3 @@ def uname_registration():
             print(RED + BOLD + "The username cannot be empty." + RESET, end='\r')
             time.sleep(1.8)
             print(LINE_CLEAR)
-
