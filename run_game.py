@@ -119,15 +119,17 @@ def user_turn():
     for the strike validation.
     """
     strike_list = []
-    print(RED + f"Enemy ships intact: {game_data['enemy_ships']}" + RESET +
-          GREEN + f"    Your ships intact: {game_data['player_ships']}" + RESET
-          + f"    Score: {user['score']}" + f"    \
-            Turn: {game_data['turn_count']}\n")
+    print(RED + f"Enemy ships intact: " + RESET, end="")
+    print(RED + f"{game_data['enemy_ships']}" + RESET, end="")
+    print(GREEN + f"    Your ships intact: " + RESET, end="")
+    print(GREEN + f"{game_data['player_ships']}" + RESET, end="")
+    print(f"    Score: {user['score']}", end="")
+    print(f"    Turn: {game_data['turn_count']}\n")
 
     picked_row = False
     while picked_row is False:
-        row_coords = input("Choose a row for your next strike \
-                           (A, B, C, D, E, F, G): \n")
+        print("Choose a row for your next strike", end="")
+        row_coords = input("(A, B, C, D, E, F, G): \n")
         row_coords = row_coords.lower()
         if row_coords == 'a':
             row_coords_int = 0
@@ -158,36 +160,42 @@ def user_turn():
             strike_list.append(row_coords_int)
             picked_row = True
         else:
-            print(RED + BOLD + f"Your input: '{row_coords}' \
-                was invalid, please try again." + RESET, end='\r')
+            print(RED + BOLD + f"Your input: '{row_coords}' " + RESET, end="")
+            print(RED + BOLD + f"is invalid, please retry." + RESET, end='\r')
             time.sleep(2)
             print(end=LINE_CLEAR)
             continue
 
     picked_col = False
     while picked_col is False:
-        col_coords = input("Now choose a column for your next stike \
-                            (1, 2, 3, 4, 5, 6, 7): \n")
+        print("Now choose a column for your next stike", end="")
+        col_coords = input("(1, 2, 3, 4, 5, 6, 7): \n")
         try:
             col_coords_int = int(col_coords)
             if col_coords_int < 1 or col_coords_int > 7:
-                print(RED + BOLD + f"Your input has to be a number between \
-                    1 to 7! Your input was: '{col_coords_int}', \
-                        please try again." + RESET, end='\r')
+                print(RED + BOLD + "Your input has to be " + RESET, end="")
+                print(RED + BOLD + "a number  between " + RESET, end="")
+                print(RED + BOLD + "1 to 7! Your input " + RESET, end="")
+                print(RED + BOLD + f"was: {col_coords_int}" + RESET, end="")
+                print(RED + BOLD + "please try again." + RESET)
                 time.sleep(2)
                 print(end=LINE_CLEAR)
                 continue
         except ValueError:
             if col_coords == "":
-                print(RED + BOLD + f"Your input has to be a number between \
-                    1 to 7! Your input was empty, \
-                        please try again." + RESET, end='\r')
+                print(RED + BOLD + "Your input has to be " + RESET, end="")
+                print(RED + BOLD + "a number  between " + RESET, end="")
+                print(RED + BOLD + "1 to 7! Your input " + RESET, end="")
+                print(RED + BOLD + "was: empty " + RESET, end="")
+                print(RED + BOLD + "please try again." + RESET)
                 time.sleep(2)
                 print(end=LINE_CLEAR)
                 continue
-            print(RED + BOLD + f"Your input has to be a number between \
-                1 to 7! Your input was: '{col_coords}', \
-                    please try again." + RESET, end='\r')
+                print(RED + BOLD + "Your input has to be " + RESET, end="")
+                print(RED + BOLD + "a number  between " + RESET, end="")
+                print(RED + BOLD + "1 to 7! Your input " + RESET, end="")
+                print(RED + BOLD + f"was: {col_coords}" + RESET, end="")
+                print(RED + BOLD + "please try again." + RESET)
             time.sleep(2)
             print(end=LINE_CLEAR)
             continue
@@ -307,8 +315,8 @@ def validate_strike(target_coords, brd, owner):
         time.sleep(2)
         return brd
     if brd[target_row][target_col] == 4:
-        print(CYAN + BOLD + 'You already struck this tile! \
-            Nothing but water here.' + RESET)
+        print(CYAN + BOLD + 'You already struck this tile! ' + RESET, end="")
+        print(CYAN + BOLD + 'Nothing but water here.' + RESET)
         time.sleep(2)
         return brd
 
@@ -337,8 +345,8 @@ def validate_answer(user_input):
             is_valid = True
             return False
         else:
-            print(RED + BOLD + f"{user_input} \
-                is not a valid answer." + RESET, end='\r')
+            print(RED + BOLD + f"{user_input} " + RESET, end="")
+            print(RED + BOLD + f"is not a valid answer." + RESET, end='\r')
             time.sleep(1.2)
             print(LINE_CLEAR)
             user_input = input('Do you wish to play again? (y/n)\n')
@@ -359,20 +367,20 @@ def bonus_score(win):
     if win:
         if game_data['turn_count'] <= 5:
             user['score'] += 50
-            print(GREEN + BOLD + "You score 50 bonus points \
-                for 100 percent accuracy" + RESET)
+            print(GREEN + BOLD + "You score 50 bonus points" + RESET, end="")
+            print(GREEN + BOLD + " for 100 percent accuracy!" + RESET)
         elif game_data['turn_count'] > 5 and game_data['turn_count'] <= 10:
             user['score'] += 30
-            print(GREEN + BOLD + "You score 30 bonus points \
-                for hitting almost all shots" + RESET)
+            print(GREEN + BOLD + "You score 30 bonus points" + RESET, end="")
+            print(GREEN + BOLD + " for hitting almost all shots!" + RESET)
         elif game_data['turn_count'] > 10 and game_data['turn_count'] <= 20:
             user['score'] += 20
-            print(GREEN + BOLD + "You score 20 bonus points \
-                for hitting many shots " + RESET)
+            print(GREEN + BOLD + "You score 20 bonus points" + RESET, end="")
+            print(GREEN + BOLD + " for hitting many shots!" + RESET)
         elif game_data['turn_count'] > 20 and game_data['turn_count'] <= 30:
             user['score'] += 10
-            print(GREEN + BOLD + "You score 10 bonus points \
-                for an average performance" + RESET)
+            print(GREEN + BOLD + "You score 10 bonus points" + RESET, end="")
+            print(GREEN + BOLD + " for an average performance." + RESET)
 
 
 def push_to_ldb():
