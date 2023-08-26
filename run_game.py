@@ -429,9 +429,10 @@ def main_gameloop():
             print(GREEN + BOLD + ">>> You are victorious! <<<" + RESET)
             bonus_score(True)
             push_to_ldb()
-            print(BOLD + f"\nYou completed your run with a total of \
-                {user['score']} points. Your achievements are saved \
-                    to the leaderboard." + RESET)
+            print(BOLD + f"\nYou completed your run with " + RESET, end="")
+            print(BOLD + f"a total of {user['score']} points." + RESET, end="")
+            print(BOLD + f" Your achievements are saved" + RESET, end="")
+            print(BOLD + f" to the leaderboard." + RESET)
             continue
         player_brd = computer_turn(player_brd)
         if game_data['player_ships'] == 0:
@@ -440,9 +441,10 @@ def main_gameloop():
             print(RED + BOLD + ">>> You have been defeated! <<<" + RESET)
             bonus_score(False)
             push_to_ldb()
-            print(BOLD + f"\nYou completed your run with a total of \
-                {user['score']} points. Your achievements are saved \
-                    to the leaderboard." + RESET)
+            print(BOLD + f"\nYou completed your run with " + RESET, end="")
+            print(BOLD + f"a total of {user['score']} points." + RESET, end="")
+            print(BOLD + f" Your achievements are saved" + RESET, end="")
+            print(BOLD + f" to the leaderboard." + RESET)
             continue
         update_board(computer_brd, player_brd)
 
