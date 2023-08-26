@@ -154,9 +154,9 @@ def load_leaderboard():
                            U_S['Score'], reverse=True)
 
     # Prints the column headers and division line in bold with even spacing.
-    print(CYAN + BOLD + f'\n   {"Position:":12s}    \
-         {"Username:":15s}    {"Score:":7s}' + RESET)
-    print(BOLD + '   ' + ('-' * 41) + RESET)
+    print(CYAN + BOLD + f'\n   {"Position:":12s}   ' + RESET, end='')
+    print(CYAN + BOLD + f'{"Username:":15s}   {"Score:":7s}' + RESET)
+    print(BOLD + '   ' + ('-' * 39) + RESET)
 
     '''
     Setup loop that prints the top 10 leaderboard entries
@@ -171,9 +171,9 @@ def load_leaderboard():
     i = 0
     while top_10_counter < 11:
         counter_to_string = str(top_10_counter) + '.'
-        print(f"   {counter_to_string:12s}    \
-             {sorted_scores[i]['Username']:15s}    \
-             {str(sorted_scores[i]['Score']):5s}")
+        print(f"   {counter_to_string:12s}", end="")
+        print(f"   {sorted_scores[i]['Username']:15s}", end="")
+        print(f"   {str(sorted_scores[i]['Score']):5s}")
         top_10_counter += 1
         i += 1
 
