@@ -468,12 +468,12 @@ def uname_registration():
         clear_screen()
         print(LOGO_TEXT)
         print(UNAME_BANNER)
-        username_input = input("\nAdmiral, please choose a username. \
-            It has to be at least 3 to max 10 characters long:\n")
+        print("\nAdmiral, please choose a username. It has to be at", end="")
+        username_input = input(" least 3 to max 10 characters long:\n")
         only_space = username_input.isspace()
         if only_space:
-            print(RED + BOLD + "The username cannot be just whitespace."
-                  + RESET, end='\r')
+            print(RED + BOLD + "The username cannot " + RESET, end="")
+            print(RED + BOLD + "be just whitespace." + RESET, end='\r')
             time.sleep(1.8)
             print(LINE_CLEAR)
         elif username_input != "":
@@ -483,8 +483,8 @@ def uname_registration():
                 clear_screen()
                 main_gameloop()
             else:
-                print(RED + BOLD + "Has to be between 3 and 10 \
-                    characters long" + RESET, end='\r')
+                print(RED + BOLD + "Name has to be between 3 " + RESET, end="")
+                print(RED + BOLD + "and 10 characters long!" + RESET, end='\r')
                 time.sleep(1.8)
                 print(LINE_CLEAR)
         else:
