@@ -429,7 +429,6 @@ def main_gameloop():
     while ongoing:
         game_data['turn_count'] += 1
         user['turns'] = game_data['turn_count']
-        print(f'{computer_brd}')
         target = user_turn()
         computer_brd = validate_strike(target, computer_brd, user['username'])
         update_board(computer_brd, player_brd)
