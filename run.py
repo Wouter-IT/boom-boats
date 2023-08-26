@@ -240,8 +240,8 @@ def load_main_menu_nav():
         print(DIVIDER)
 
         # Reused code from the Love Sandwiches assignment
-        nav_input = input("Choose a number between 1 and 4 \
-                        and press 'Enter' to navigate: \n")
+        print("Choose a number between 1 and 4 ", end="")
+        nav_input = input("and press 'Enter' to navigate: \n")
         if validate_input_int(nav_input):
             nav_input_int = int(nav_input)
             if nav_input_int == 1:
@@ -254,8 +254,8 @@ def load_main_menu_nav():
             elif nav_input_int == 3:
                 load_leaderboard()
             elif nav_input_int == 4:
-                confirm = input('Are you certain you want to quit? \
-                                Yes or no (y/n): \n')
+                print("Are you certain you want to quit? ", end="")
+                confirm = input('Yes or no (y/n):\n')
                 if confirm_quit(confirm):
                     return False
             else:
@@ -266,7 +266,7 @@ def main():
     """
     Run all program functions
     """
-    load_game()
+    #load_game()
     nav = load_main_menu_nav()
 
 
