@@ -12,6 +12,7 @@ Boom Boats is a battleship game moddeled after the classic board game and is pla
 
 # Contents
 - [User Experience UX](<#user-experience-ux>)
+  - [Game Audience](<#game-target-audience>)
   - [Wireframes](<#wireframes>)
   - [Logic flow](<#logic-flow>)
   - [Design & Colour Scheme](<#design--colour-scheme>)
@@ -39,6 +40,20 @@ Boom Boats is a battleship game moddeled after the classic board game and is pla
 - [Acknowledgements](<#acknowledgements>)
 
 # User Experience UX
+
+## Game target audience
+
+The intended target audiences are:
+- Fellow Python programmes and student from the Code Institute development course interested in simple game logic.
+- Casual players and fans of the battleship board game.
+-  Score oriented players that want to obtain the high-score.
+
+User Stories:
+- As a player, I want a game that guides me using UI elements through the game process.
+- As a player, I want navigation to be quick and easy.
+- As a player, I want a game with replayability. 
+- As a player, I want a clear in-game goal.
+- As a player, I want to keep track of my score.
 
 ## Wireframes
 

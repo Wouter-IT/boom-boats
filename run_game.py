@@ -173,29 +173,30 @@ def user_turn():
         try:
             col_coords_int = int(col_coords)
             if col_coords_int < 1 or col_coords_int > 7:
-                print(RED + BOLD + "Your input has to be " + RESET, end="")
+                print(RED + BOLD + "The input has to be " + RESET, end="")
                 print(RED + BOLD + "a number  between " + RESET, end="")
-                print(RED + BOLD + "1 to 7! Your input " + RESET, end="")
-                print(RED + BOLD + f"was: {col_coords_int}" + RESET, end="")
-                print(RED + BOLD + "please try again." + RESET)
+                print(RED + BOLD + "1 to 7! Yours " + RESET, end="")
+                print(RED + BOLD + f"was: '{col_coords_int}'" + RESET, end="")
+                print(RED + BOLD + " please retry." + RESET, end="\r")
                 time.sleep(2)
                 print(end=LINE_CLEAR)
                 continue
         except ValueError:
             if col_coords == "":
-                print(RED + BOLD + "Your input has to be " + RESET, end="")
+                print(RED + BOLD + "The input has to be " + RESET, end="")
                 print(RED + BOLD + "a number  between " + RESET, end="")
-                print(RED + BOLD + "1 to 7! Your input " + RESET, end="")
+                print(RED + BOLD + "1 to 7! Yours " + RESET, end="")
                 print(RED + BOLD + "was: empty " + RESET, end="")
-                print(RED + BOLD + "please try again." + RESET)
+                print(RED + BOLD + "please retry." + RESET, end="\r")
                 time.sleep(2)
                 print(end=LINE_CLEAR)
                 continue
-                print(RED + BOLD + "Your input has to be " + RESET, end="")
+            else:
+                print(RED + BOLD + "The input has to be " + RESET, end="")
                 print(RED + BOLD + "a number  between " + RESET, end="")
-                print(RED + BOLD + "1 to 7! Your input " + RESET, end="")
-                print(RED + BOLD + f"was: {col_coords}" + RESET, end="")
-                print(RED + BOLD + "please try again." + RESET)
+                print(RED + BOLD + "1 to 7! Yours " + RESET, end="")
+                print(RED + BOLD + f"was: '{col_coords}'" + RESET, end="")
+                print(RED + BOLD + " please retry." + RESET, end="\r")
             time.sleep(2)
             print(end=LINE_CLEAR)
             continue
