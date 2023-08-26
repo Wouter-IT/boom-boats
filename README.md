@@ -46,7 +46,7 @@ Boom Boats is a battleship game moddeled after the classic board game and is pla
 The intended target audiences are:
 - Fellow Python programmes and student from the Code Institute development course interested in simple game logic.
 - Casual players and fans of the battleship board game.
--  Score oriented players that want to obtain the high-score.
+- Score oriented players that want to obtain the high-score.
 
 User Stories:
 - As a player, I want a game that guides me using UI elements through the game process.
@@ -145,7 +145,7 @@ The use of DIM to darken out the sea tiles, Cyan to mark missed shots 'M', red t
 ### Rules
 - Displays the rules of the game.
 - Explains how a user can score points and what the core goal of the game is.
-- Explains the bonus system,
+- Explains the bonus system.
 
 ![screenshot of the rules screen](assets/images/readme/rules.png)
 
@@ -216,7 +216,7 @@ The main game screen where the core gameplay loop takes place. It consists of se
 ![screenshot of strike miss or hit](assets/images/readme/visual-feedback-player.png)
 
 **UI value**
-- Computer turn feedback with a short delay between messages to simulate that the computer is "Thinking"
+- Computer turn feedback with a short delay between messages to simulate that the computer is "thinking".
 - Clearly states the coordinates chose by the computer for a strike, and provide feedback if the strike was hit or miss.
 
 ![screenshot of computer turn](assets/images/readme/computer-turn-feedback.png)
@@ -252,7 +252,7 @@ The main game screen where the core gameplay loop takes place. It consists of se
 
 
 ## Future Features
-- Ability login so a user can protect their username and use it explusively.
+- Ability login so a user can protect their username and use it exclusively.
 - Difficulty selection to expand or reduce board size/amount of ships.
 - Different ship sizes.
 - Placement of ships based on user input.

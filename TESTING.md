@@ -82,7 +82,7 @@ Although an active effort was made to remove any error from the linter, the art 
 ### User registration
 
 - [x] All visuals displaying as intended.
-- [x] Asks user if they want toinput a username and employs correct error handeling for any invalid inputs. (<3 or >10 chracters, empty inputs and only whitespace)
+- [x] Asks user if they want to input a username and employs correct error handeling for any invalid inputs. (<3 or >10 characters, empty inputs, and only whitespace.)
 - [x] Errors are cleared from screen after a few seconds.
 - [x] Brings user to the game upon receiving a valid username.
 - [x] Stores the username in the user's data.
@@ -91,7 +91,7 @@ Although an active effort was made to remove any error from the linter, the art 
 
 ### Main game screen
 
-- [x] All visuals displaying as intended, including the username stred in the user's data above the player board.
+- [x] All visuals displaying as intended, including the username stored in the user's data above the player board.
 - [x] All visuals update as intended after processing player & computer strike targets.
 - [x] Correctly displays and updates the informative UI elements for scoring, turn count, and player/computer ships that are intact.
 - [x] Instructions visible on screen and error handeling for invalid inputs work correctly.
@@ -114,7 +114,7 @@ Although an active effort was made to remove any error from the linter, the art 
 ### Resolved
 
 #### Duplicate boards after ship placement
-When placing ships for the player and computer both would end up with an identical board. The bug was caused due to the computer_brd and player_brd copying a reference to the BRD list as opposed to comying the actual board themselves. Changes made to the boards would then be reflected in both variables. The issue was resolved by adding a copy.deepcopy statement for BRD to actually copy the list of lists as opposed to the reference to it. 
+When placing ships for the player and computer both would end up with an identical board. The bug was caused due to the computer_brd and player_brd copying a reference to the BRD list as opposed to copying the actual board itself. Changes made to the boards would then be reflected in both variables. The issue was resolved by adding a copy.deepcopy statement for BRD to actually copy the list of lists as opposed to the reference to it. 
 
 ![duplicate board bug](assets/images/testing/duplicate-brd.png)
 
@@ -124,9 +124,9 @@ During earlier stages of the devlopment rows and columns were switched around wh
 ### Unresolved
 
 #### Incorrect screen clearing
-The code os.system('clear') that is supposed to clear the entire screen does not work entirely as it is supposed to n the mock-terminal. When multiple lines are skipped, causing multiple error messages to pop up, the clear_screen function only clears the lines currently visible on the screen. The lines that you can see when you scroll up remain as they are. When new visuals are printed to the screen however, the mock terminal does "focus" on the newly printed lines. So, unless the user scrolls up this issues won't intefere with the user experience or flow of the game. 
+The code os.system('clear') that is supposed to clear the entire screen does not work entirely as it is supposed to in the mock-terminal. When multiple lines are skipped, causing multiple error messages to pop up, the clear_screen function only clears the lines currently visible on the screen. The lines that you can see when you scroll up remain as they are. When new visuals are printed to the screen however, the mock-terminal does "focus" on the newly printed lines. So, unless the user scrolls up this issues won't intefere with the user experience or flow of the game. 
 
-This issue has been taken up with Code Institute Student support who could confirm other students have encountered the same issue but without any definitive solution. When the game is run in the console of a programme like Gitpod the clear_screen function works as intended.
+This issue has been taken up with Code Institute Student support who could confirm other students have encountered the same issue but without any definitive solution. My mentor also confirmed that as long as it doesn't intefere with the gameplay it shouldn't be much of an issue. When the game is run in the console of a programme like Gitpod the clear_screen function works as intended.
 
 ![clear screen not working bug](assets/images/testing/clr-screen-not-working.png)
 
