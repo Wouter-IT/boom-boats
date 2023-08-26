@@ -101,8 +101,8 @@ def view_rules():
         clear_screen()
         print(LOGO_TEXT)
         print(BANNER)
-        rules_answer = input('Would you like to see the rules \
-            before playing? (y/n)\n')
+        print('Would you like to see the rules ', end="")
+        rules_answer = input('before playing? (y/n)\n')
         if rules_answer.lower() == "y":
             chosen = True
             return True
@@ -110,9 +110,9 @@ def view_rules():
             chosen = True
             return False
         else:
-            print(RED + BOLD + f"{rules_answer} is not a valid \
-                answer." + RESET, end='\r')
-            time.sleep(1.2)
+            print(RED + BOLD + f"{rules_answer} is " + RESET, end="")
+            print(RED + BOLD + f"not a valid answer." + RESET, end='\r')
+            time.sleep(1.4)
             print(LINE_CLEAR)
 
 
