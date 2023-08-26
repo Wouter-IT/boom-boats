@@ -121,11 +121,13 @@ def user_turn():
     strike_list = []
     print(RED + f"Enemy ships intact: {game_data['enemy_ships']}" + RESET +
           GREEN + f"    Your ships intact: {game_data['player_ships']}" + RESET
-          + f"    Score: {user['score']}" + f"    Turn: {game_data['turn_count']}\n")
-          
+          + f"    Score: {user['score']}" + f"    \
+            Turn: {game_data['turn_count']}\n")
+
     picked_row = False
     while picked_row is False:
-        row_coords = input("Choose a row for your next strike (A, B, C, D, E, F, G): \n")
+        row_coords = input("Choose a row for your next strike \
+                           (A, B, C, D, E, F, G): \n")
         row_coords = row_coords.lower()
         if row_coords == 'a':
             row_coords_int = 0
@@ -156,28 +158,36 @@ def user_turn():
             strike_list.append(row_coords_int)
             picked_row = True
         else:
-            print(RED + BOLD + f"Your input: '{row_coords}' was invalid, please try again." + RESET, end='\r')
+            print(RED + BOLD + f"Your input: '{row_coords}' \
+                was invalid, please try again." + RESET, end='\r')
             time.sleep(2)
             print(end=LINE_CLEAR)
             continue
 
     picked_col = False
     while picked_col is False:
-        col_coords = input("Now choose a column for your next stike (1, 2, 3, 4, 5, 6, 7): \n")
+        col_coords = input("Now choose a column for your next stike \
+                            (1, 2, 3, 4, 5, 6, 7): \n")
         try:
             col_coords_int = int(col_coords)
             if col_coords_int < 1 or col_coords_int > 7:
-                print(RED + BOLD + f"Your input has to be a number between 1 to 7! Your input was: '{col_coords_int}', please try again." + RESET, end='\r')
+                print(RED + BOLD + f"Your input has to be a number between \
+                    1 to 7! Your input was: '{col_coords_int}', \
+                        please try again." + RESET, end='\r')
                 time.sleep(2)
                 print(end=LINE_CLEAR)
                 continue
         except ValueError:
             if col_coords == "":
-                print(RED + BOLD + f"Your input has to be a number between 1 to 7! Your input was empty, please try again." + RESET, end='\r')
+                print(RED + BOLD + f"Your input has to be a number between \
+                    1 to 7! Your input was empty, \
+                        please try again." + RESET, end='\r')
                 time.sleep(2)
                 print(end=LINE_CLEAR)
                 continue
-            print(RED + BOLD + f"Your input has to be a number between 1 to 7! Your input was: '{col_coords}', please try again." + RESET, end='\r')
+            print(RED + BOLD + f"Your input has to be a number between \
+                1 to 7! Your input was: '{col_coords}', \
+                    please try again." + RESET, end='\r')
             time.sleep(2)
             print(end=LINE_CLEAR)
             continue
@@ -200,7 +210,8 @@ def computer_turn(plyr_brd):
     while valid_comp_strike is False:
         rdm_strike_row = random.randint(0, 6)
         rdm_strike_col = random.randint(0, 6)
-        if plyr_brd[rdm_strike_row][rdm_strike_col] != 3 and plyr_brd[rdm_strike_row][rdm_strike_col] != 4:
+        if (plyr_brd[rdm_strike_row][rdm_strike_col] != 3
+                and plyr_brd[rdm_strike_row][rdm_strike_col] != 4):
             valid_comp_strike is True
             strike_valid = True
             break
@@ -296,7 +307,8 @@ def validate_strike(target_coords, brd, owner):
         time.sleep(2)
         return brd
     if brd[target_row][target_col] == 4:
-        print(CYAN + BOLD + 'You already struck this tile! Nothing but water here.' + RESET)
+        print(CYAN + BOLD + 'You already struck this tile! \
+            Nothing but water here.' + RESET)
         time.sleep(2)
         return brd
 
@@ -325,7 +337,8 @@ def validate_answer(user_input):
             is_valid = True
             return False
         else:
-            print(RED + BOLD + f"{user_input} is not a valid answer." + RESET, end='\r')
+            print(RED + BOLD + f"{user_input} \
+                is not a valid answer." + RESET, end='\r')
             time.sleep(1.2)
             print(LINE_CLEAR)
             user_input = input('Do you wish to play again? (y/n)\n')
@@ -346,16 +359,20 @@ def bonus_score(win):
     if win:
         if game_data['turn_count'] <= 5:
             user['score'] += 50
-            print(GREEN + BOLD + "You score 50 bonus points for 100 percent accuracy" + RESET)
+            print(GREEN + BOLD + "You score 50 bonus points \
+                for 100 percent accuracy" + RESET)
         elif game_data['turn_count'] > 5 and game_data['turn_count'] <= 10:
             user['score'] += 30
-            print(GREEN + BOLD + "You score 30 bonus points for hitting almost all shots" + RESET)
+            print(GREEN + BOLD + "You score 30 bonus points \
+                for hitting almost all shots" + RESET)
         elif game_data['turn_count'] > 10 and game_data['turn_count'] <= 20:
             user['score'] += 20
-            print(GREEN + BOLD + "You score 20 bonus points for hitting many shots " + RESET)
+            print(GREEN + BOLD + "You score 20 bonus points \
+                for hitting many shots " + RESET)
         elif game_data['turn_count'] > 20 and game_data['turn_count'] <= 30:
             user['score'] += 10
-            print(GREEN + BOLD + "You score 10 bonus points for an average performance" + RESET)
+            print(GREEN + BOLD + "You score 10 bonus points \
+                for an average performance" + RESET)
 
 
 def push_to_ldb():
@@ -387,7 +404,9 @@ def main_gameloop():
     """
     # Creates visuals and distributes ships on player and computer board
     create_logo()
-    # copy.deepcopy bug fix for copying the reference to the entitiy 'brd' as opposed to the actual list of lists. Found on stack Overflow by user Felix King
+    # copy.deepcopy bug fix for copying the reference to the entitiy 'brd'
+    # as opposed to the actual list of lists. Found on stack Overflow by
+    # user Felix King
     # https://stackoverflow.com/questions/2612802/how-do-i-clone-a-list-so-that-it-doesnt-change-unexpectedly-after-assignment
     computer_brd = copy.deepcopy(BRD)
     player_brd = copy.deepcopy(BRD)
@@ -410,7 +429,9 @@ def main_gameloop():
             print(GREEN + BOLD + ">>> You are victorious! <<<" + RESET)
             bonus_score(True)
             push_to_ldb()
-            print(BOLD + f"\nYou completed your run with a total of {user['score']} points. Your achievements are saved to the leaderboard." + RESET)
+            print(BOLD + f"\nYou completed your run with a total of \
+                {user['score']} points. Your achievements are saved \
+                    to the leaderboard." + RESET)
             continue
         player_brd = computer_turn(player_brd)
         if game_data['player_ships'] == 0:
@@ -419,7 +440,9 @@ def main_gameloop():
             print(RED + BOLD + ">>> You have been defeated! <<<" + RESET)
             bonus_score(False)
             push_to_ldb()
-            print(BOLD + f"\nYou completed your run with a total of {user['score']} points. Your achievements are saved to the leaderboard." + RESET)
+            print(BOLD + f"\nYou completed your run with a total of \
+                {user['score']} points. Your achievements are saved \
+                    to the leaderboard." + RESET)
             continue
         update_board(computer_brd, player_brd)
 
@@ -437,17 +460,20 @@ def main_gameloop():
 
 def uname_registration():
     """
-    Requests a username from the player and registers the input to the user data dictionary
+    Requests a username from the player and registers the input
+    to the user data dictionary
     """
     valid_input = False
     while valid_input is False:
         clear_screen()
         print(LOGO_TEXT)
         print(UNAME_BANNER)
-        username_input = input("\nAdmiral, please choose a username. It has to be at least 3 to max 10 characters long:\n")
+        username_input = input("\nAdmiral, please choose a username. \
+            It has to be at least 3 to max 10 characters long:\n")
         only_space = username_input.isspace()
         if only_space:
-            print(RED + BOLD + "The username cannot be just whitespace." + RESET, end='\r')
+            print(RED + BOLD + "The username cannot be just whitespace."
+                  + RESET, end='\r')
             time.sleep(1.8)
             print(LINE_CLEAR)
         elif username_input != "":
@@ -457,10 +483,12 @@ def uname_registration():
                 clear_screen()
                 main_gameloop()
             else:
-                print(RED + BOLD + "Has to be between 3 and 10 characters long" + RESET, end='\r')
+                print(RED + BOLD + "Has to be between 3 and 10 \
+                    characters long" + RESET, end='\r')
                 time.sleep(1.8)
                 print(LINE_CLEAR)
         else:
-            print(RED + BOLD + "The username cannot be empty." + RESET, end='\r')
+            print(RED + BOLD + "The username cannot be empty."
+                  + RESET, end='\r')
             time.sleep(1.8)
             print(LINE_CLEAR)
