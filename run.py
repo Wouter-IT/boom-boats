@@ -131,7 +131,7 @@ def load_leaderboard():
 
     ldb_sheet = SHEET.worksheet('leaderboard')
     unsorted_scores = ldb_sheet.get_all_records()
-    # The use of the lambda expression in order to sort a list of dicts on a spcific key value found on Note.NKMK.me
+    # The use of the lambda expression in order to sort a list of dicts on a specific key value found on Note.NKMK.me
     # https://note.nkmk.me/en/python-lambda-usage/
     sorted_scores = sorted(unsorted_scores, key=lambda U_S: U_S['Score'], reverse=True)
 

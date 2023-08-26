@@ -38,8 +38,6 @@ LINE_CLEAR = '\x1b[2K'
 LINE_UP = '\033[1A'
 
 
-# end= to prevent new line after print was found on EnterpriseDNA blog
-# https://blog.enterprisedna.co/python-print-without-newline-easy-step-by-step-guide/#:~:text=To%20print%20without%20a%20new,")
 def clear_screen():
     '''
     Clears the screen
@@ -55,6 +53,8 @@ def create_logo():
     print(BANNER)
 
 
+# end= to prevent new line after print was found on EnterpriseDNA blog
+# https://blog.enterprisedna.co/python-print-without-newline-easy-step-by-step-guide/#:~:text=To%20print%20without%20a%20new,")
 def print_brd(brd, owner):
     """
     Prints the playing board with the appropriate row and column headers
