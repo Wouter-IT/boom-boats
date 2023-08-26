@@ -189,18 +189,24 @@ def validate_input_int(user_input):
     try:
         input_int = int(user_input)
         if input_int > 4 or input_int <= 0:
-            print(RED + BOLD + f"Your input has to be a number 1 to 4! \
-                Your input was: {user_input}, please try again.\n" + RESET)
+            print(RED + BOLD + f"Your input has to ", end="" + RESET)
+            print(RED + BOLD + f"be a number 1 to 4! ", end="" + RESET)
+            print(RED + BOLD + f"Your input was: {user_input}", end="" + RESET)
+            print(RED + BOLD + f", please try again.\n" + RESET)
             time.sleep(2)
             return False
     except ValueError:
         if user_input == "":
-            print(RED + BOLD + "Your input has to be a number 1 to 4! \
-                Your input was empty, please try again.\n" + RESET)
+            print(RED + BOLD + f"Your input has to ", end="" + RESET)
+            print(RED + BOLD + f"be a number 1 to 4! ", end="" + RESET)
+            print(RED + BOLD + f"Your input was empty", end="" + RESET)
+            print(RED + BOLD + f", please try again.\n" + RESET)
             time.sleep(2)
             return False
-        print(RED + BOLD + f"Your input has to be a number 1 to 4! \
-            Your input was: {user_input}, please try again.\n" + RESET)
+        print(RED + BOLD + f"Your input has to ", end="" + RESET)
+        print(RED + BOLD + f"be a number 1 to 4! ", end="" + RESET)
+        print(RED + BOLD + f"Your input was {user_input}", end="" + RESET)
+        print(RED + BOLD + f", please try again.\n" + RESET)
         time.sleep(2)
         return False
     return True
@@ -266,7 +272,7 @@ def main():
     """
     Run all program functions
     """
-    #load_game()
+    # load_game()
     nav = load_main_menu_nav()
 
 
